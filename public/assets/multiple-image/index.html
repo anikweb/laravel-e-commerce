@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jQuery FileUp Demos</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="jquery.growl.css" rel="stylesheet" type="text/css">
+<link href="src/fileup.css" rel="stylesheet" type="text/css">
+<style>
+body { background-color:#fafafa; font-family:'Roboto';}
+h2 { margin:20px auto;}
+.container { margin:50px auto;}
+.dropzone {
+    background-color: #ccc;
+    border: 3px dashed #888;
+    width: 350px;
+    height: 150px;
+    border-radius: 25px;
+    font-size: 20px;
+    color: #777;
+    padding-top: 50px;
+    text-align: center;
+}
+.dropzone.over {
+    opacity: .7;
+    border-style: solid;
+}
+#dropzone .dropzone {
+    margin-top: 25px;
+    padding-top: 60px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>jQuery FileUp Demos</h1>
+<div class="jquery-script-ads" style="margin-top:20px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+  <h2>Basic</h2>
+  <button type="button" class="btn btn-success fileup-btn">
+  Select file
+  <input type="file" id="upload-1">
+  </button>
+  <div id="upload-1-queue" class="queue"></div>
+  <h2>Multi Upload</h2>
+  <form id="multiple">
+  <button type="button" class="btn btn-success fileup-btn">
+        Select files
+        <input type="file" id="upload-2" multiple>
+    </button>
+
+    <a class="control-button btn btn-link" style="display: none"
+       href="javascript:$.fileup('upload-2', 'upload', '*')">Upload all</a>
+    <a class="control-button btn btn-link" style="display: none"
+       href="javascript:$.fileup('upload-2', 'remove', '*')">Remove all</a>
+
+    <div id="upload-2-queue" class="queue"></div>
+    </form>
+    <h2>Image Only</h2>
+     <button type="button" class="btn btn-success fileup-btn">
+        Select images
+        <input type="file" id="upload-3" multiple accept="image/*">
+    </button>
+
+    <div id="upload-3-queue" class="queue"></div>
+    <h2>Drag and drop zone</h2>
+    <form id="dropzone">
+    <button type="button" class="btn btn-success fileup-btn">
+        Select files
+        <input type="file" id="upload-4" multiple>
+    </button>
+
+    <div id="upload-4-dropzone" class="dropzone">
+        Dropzone
+    </div>
+
+    <div id="upload-4-queue" class="queue"></div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="jquery.growl.js"></script> 
+<script src="src/fileup.js"></script> 
+<script>
+        $.fileup({
+            url: 'example.com/your/path?file_upload=1',
+            inputID: 'upload-1',
+            queueID: 'upload-1-queue',
+            onSuccess: function(response, file_number, file) {
+                $.growl.notice({ title: "Upload success!", message: file.name });
+            },
+            onError: function(event, file, file_number) {
+                $.growl.error({ message: "Upload error!" });
+            }
+        });
+		$.fileup({
+            url: 'example.com/your/path?file_upload=1',
+            inputID: 'upload-2',
+            dropzoneID: 'upload-2-dropzone',
+            queueID: 'upload-2-queue',
+            onSelect: function(file) {
+                $('#multiple .control-button').show();
+            },
+            onRemove: function(file, total) {
+                if (file === '*' || total === 1) {
+                    $('#multiple .control-button').hide();
+                }
+            },
+            onSuccess: function(response, file_number, file) {
+                $.growl.notice({ title: "Upload success!", message: file.name });
+            },
+            onError: function(event, file, file_number) {
+                $.growl.error({ message: "Upload error!" });
+            }
+        });
+		$.fileup({
+            url: 'https://github.com?file_upload=1',
+            inputID: 'upload-3',
+            queueID: 'upload-3-queue',
+            autostart: true,
+            onSelect: function(file) {
+                $('#types .control-button').show();
+            },
+            onRemove: function(file, total) {
+                if (file === '*' || total === 1) {
+                    $('#types .control-button').hide();
+                }
+            },
+            onSuccess: function(response, file_number, file) {
+                $.growl.notice({ title: "Upload success!", message: file.name });
+            },
+            onError: function(event, file, file_number) {
+                $.growl.error({ message: "Upload error!" });
+            }
+        });
+		 $.fileup({
+            url: 'https://github.com?file_upload=1',
+            inputID: 'upload-4',
+            queueID: 'upload-4-queue',
+            dropzoneID: 'upload-4-dropzone'
+        })
+            .select(function(file) {
+                $('#dropzone .control-button').show();
+            })
+            .remove(function(file, total) {
+                if (file === '*' || total === 1) {
+                    $('#dropzone .control-button').hide();
+                }
+            })
+            .success(function(response, file_number, file) {
+                $.growl.notice({ title: "Upload success!", message: file.name });
+            })
+            .error(function(event, file, file_number) {
+                $.growl.error({ message: "Upload error!" });
+            })
+            .dragEnter(function(event) {
+                $(event.target).addClass('over');
+            })
+            .dragLeave(function(event) {
+                $(event.target).removeClass('over');
+            })
+            .dragEnd(function(event) {
+                $(event.target).removeClass('over');
+            });
+
+    </script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
