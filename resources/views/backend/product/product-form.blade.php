@@ -32,7 +32,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="post" action="{{ url('post-product') }}" enctype="multipart/form-data" >
+              <form method="post" name="myForm" action="{{ url('post-product') }}" enctype="multipart/form-data" {{-- onsubmit="return formSubmit()" --}}>
                 @csrf
                 <div class="card-body">
                     <div class="row">
@@ -61,8 +61,8 @@
                       <div class="col-md-12 my-auto pt-2">
                         <div class="form-group">
                             <label for="imageGallery">Image Gallery</label>
-                            <input name="imageGallery[]" multiple type="file" class="form-control @error('imageGallery') is-invalid @enderror" id="imageGallery">
-                            @error('imageGallery')
+                            <input name="imageGallery[]" multiple type="file" class="form-control @error('imageGallery[]') is-invalid @enderror" id="imageGallery">
+                            @error('imageGallery[]')
                                 <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i>{{ $message }}</div>
                             @enderror
                         </div>
@@ -128,7 +128,7 @@
                                                     <div class="form-group">
                                                         <label for="color">Color</label>
                                                         <select name="color[]" class="form-control" id="color">
-                                                            <option value class="text-muted">Select One</option>
+                                                            <option value class="text-muted">--Select One--</option>
                                                             @forelse ($colrView as $colrViews)
                                                                 <option value="{{ $colrViews->id }}">{{  $colrViews->color_name }}</option>
                                                             @empty
@@ -141,7 +141,7 @@
                                                     <div class="form-group">
                                                         <label for="size">Size</label>
                                                         <select name="size[]" class="form-control" id="size">
-                                                            <option value class="text-muted">Select One</option>
+                                                            <option value class="text-muted">--Select One--</option>
                                                             @forelse ($sizeView as $sizeViews)
                                                                 <option value="{{  $sizeViews->id }}">{{  $sizeViews->size_name }}</option>
                                                             @empty
@@ -209,7 +209,15 @@
 @section('footer_js')
 
   <script>
-
+    // function formSubmit(){
+    //     var imgGallery = document.forms['myForm']['imageGallery[]'].value;
+    //     var color = document.forms['myForm']['color[]'].value;
+    //     var regularPrice = document.forms['myForm']['regular_price[]'].value;
+    //     if(imgGallery==""){
+    //         alert('Image Gallery Required.');
+    //         return false;
+    //     }
+    // }
     $('#product_title').keyup(function() {
       $('#product_slug').val($(this).val().toLowerCase().split(',').join('').replace(/\s/g,"-"));
     });

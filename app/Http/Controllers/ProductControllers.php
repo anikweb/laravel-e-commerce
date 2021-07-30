@@ -102,8 +102,10 @@ class ProductControllers extends Controller
         return view('backend.product.product-edit',[
             'catView'=>Category::all(),
             'productView'=>$product,
-
+            'colrView' => ProductColor::orderBy('color_name','asc')->get(),
+            'sizeView' => ProductSize::all(),
             'scatView'=>Subcategory::where('foreign_key',$product->Category_id)->get(),
+            // 'productAttribute'=>ProductAttribute::where('product_id',$product->id)->get(),
         ]);
     }
     function updatePostProduct(Request $request){

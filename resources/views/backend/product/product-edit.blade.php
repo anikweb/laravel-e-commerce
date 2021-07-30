@@ -107,6 +107,79 @@
                           @enderror
                         </div>
                       </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="multi-field-wrapper">
+                                <div class="multi-fields">
+                                    <div class="row multi-field form-group my-2">
+                                        <div class="col-md-10">
+                                            @foreach ($productView->attribute as $product)
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="color">Color</label>
+                                                            <select name="color[]" class="form-control" id="color">
+                                                                <option value class="text-muted">--Select One--</option>
+                                                                @forelse ($colrView as $colrViews)
+                                                                    <option @if($product->color_id == $colrViews->id) selected @endif value="{{ $colrViews->id }}">{{  $colrViews->color_name }}</option>
+                                                                @empty
+                                                                    <option value class="text-danger">empty</option>
+                                                                @endforelse
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="size">Size</label>
+                                                            <select name="size[]" class="form-control" id="size">
+                                                                <option value class="text-muted">--Select One--</option>
+                                                                @forelse ($sizeView as $sizeViews)
+                                                                    <option @if ($product->size_id ==  $sizeViews->id )selected @endif value="{{ $sizeViews->id }}">{{  $sizeViews->size_name }}</option>
+                                                                @empty
+                                                                    <option value class="text-danger">empty</option>
+                                                                @endforelse
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="rPrice">Regular Price <span class="text-danger">*</span> </label>
+                                                            <input type="text" name="rPrice[]" value="{{ $product->regular_price }}" class="form-control @error('rPrice[]') is-invalid @enderror" id="rPrice">
+                                                            @error('rPrice[]')
+                                                                <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="ofrPrice">Offer Price</label>
+                                                            <input type="text" name="ofrPrice[]" value="{{ $product->offer_price }}" class="form-control @error('ofrPrice[]') is-invalid @enderror" id="ofrPrice">
+                                                            @error('ofrPrice[]')
+                                                                <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="quantity">Quantity <span class="text-danger">*</span> </label>
+                                                            <input type="number" name="quantity[]" value="{{ $product->quantity }}" class="form-control @error('quantity') is-invalid @enderror" id="quantity">
+                                                            @error('quantity')
+                                                                <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="col-md-2 remove-field outline-danger text-white my-auto">
+                                            <span class="text-danger" style="cursor:pointer"><i class=" fas fa-minus-circle"></i> Remove</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="add-field btn-sm btn-primary ">Add field</button>
+                            </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -155,6 +228,17 @@
       }else{
 
       }
+    });
+    // Dynamic Add/Remove Field
+    $('.multi-field-wrapper').each(function() {
+        var $wrapper = $('.multi-fields', this);
+        $(".add-field", $(this)).click(function(e) {
+            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+        });
+        $('.multi-field .remove-field', $wrapper).click(function() {
+            if ($('.multi-field', $wrapper).length > 1)
+                $(this).parent('.multi-field').remove();
+        });
     });
   </script>
 @endsection
