@@ -69,7 +69,7 @@
                           <td>
                             <img width="100" src="{{ asset('products/thumbnails/'.$prodViewLoop->thumbnail) }}" alt="{{ $prodViewLoop->title }}">
                           </td>
-                          <td>{{ $prodViewLoop->created_at->format('h:i A,  d-M-Y')}}({{ $prodViewLoop->created_at->diffForHumans() }})</td>
+                          <td>{{ $prodViewLoop->created_at->diffForHumans() }}</td>
                           <td class="text-center">
                             <a class="btn btn-primary" href="{{ route('editProduct',$prodViewLoop->slug) }}"> <i class="fas fa-edit text-white"></i> Edit </a>
                             <a class="btn btn-danger" href="{{ url('delete-category') }}/{{ $prodViewLoop->id }}"><img width="20" src="{{ asset('assets/dist/img/stock-out.png') }}" alt="stock out"> Stock Out</a>

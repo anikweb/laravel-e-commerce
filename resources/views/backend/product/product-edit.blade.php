@@ -114,6 +114,7 @@
                                     <div class="row multi-field form-group my-2">
                                         <div class="col-md-10">
                                             @foreach ($productView->attribute as $product)
+                                                <input type="hidden" name="attrId[]" value="{{ $product->id }}">
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">

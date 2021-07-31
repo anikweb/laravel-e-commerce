@@ -109,7 +109,7 @@ class ProductControllers extends Controller
         ]);
     }
     function updatePostProduct(Request $request){
-
+        // return $request->all();
         $product = Product::findOrFail($request->product_id);
         $product->title = $request->product_title;
         $product->slug = Str::slug($request->product_title);
@@ -117,23 +117,39 @@ class ProductControllers extends Controller
         $product->subcategory_id = $request->subCategory_id;
         $product->summary = $request->summary;
         $product->description = $request->description;
-
         if($request->hasFile('product_thumbnail')){
             $old_thumbnail = public_path('products/thumbnails/'.$product->thumbnail);
             if(file_exists($old_thumbnail)){
                 unlink($old_thumbnail);
             }
-
             $slug= Str::slug($request->product_title);
             $image = $request->file('product_thumbnail');
             $ext = $slug.'-'.Str::random(10).'.'.$image->getClientOriginalExtension();
             Image::make($image)->save(public_path('products/thumbnails/'.$ext));
             $product->thumbnail = $ext;
-
         }
         $product->save();
-
+        foreach($request->attrId as $key => $attrId){
+            if($attrId !=''){
+                $attr = ProductAttribute::findOrFail($attrId);
+                $attr->product_id = $request->product_id;
+                $attr->color_id = $request->color[$key];
+                $attr->size_id= $request->size[$key];
+                $attr->regular_price = $request->rPrice[$key];
+                $attr->offer_price = $request->ofrPrice[$key];
+                $attr->quantity = $request->quantity[$key];
+                $attr->save();
+            }else{
+                $attr = new ProductAttribute;
+                $attr->product_id = $request->product_id;
+                $attr->color_id = $request->color[$key];
+                $attr->size_id = $request->size[$key];
+                $attr->regular_price = $request->rPrice[$key];
+                $attr->offer_price = $request->ofrPrice[$key];
+                $attr->quantity = $request->quantity[$key];
+                $attr->save();
+            }
+        }
         return redirect('products-list')->with('success','Product Updated');
-
     }
 }
