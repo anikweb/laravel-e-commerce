@@ -45,7 +45,7 @@
                           @enderror
                         </div>
                       </div>
-                      <div class="col-md-10 my-auto">
+                      <div class="col-md-10 my-auto mt-2">
                         <div class="form-group">
                           <label for="product_thumbnail">Thumbnail</label>
                           <input name="product_thumbnail" type="file" class="form-control @error('product_thumbnail') is-invalid @enderror" id="product_thumbnail" onchange="document.getElementById('ThumbnailPreview').src = window.URL.createObjectURL(this.files[0])">
@@ -56,9 +56,40 @@
                           @enderror
                         </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-2 mt-2">
                         <img width="100%" src="{{ asset('products/thumbnails/'.$productView->thumbnail) }}" draggable="false"  id="ThumbnailPreview" alt="{{ $productView->title }}">
                       </div>
+                      <div class="col-md-12 mt-2">
+                          <label>Multiple Images <i class="fas fa-arrow-down"></i></label>
+                      </div>
+                      @foreach ($productView->imageGallery as $key=> $mulImage)
+                        <div class="col-md-6 my-auto mt-2">
+                            <div class="form-group">
+                            <label for="multiple_image">Image-{{ ++$key }} Change</label>
+                            <input type="hidden" name="mulImgId[]" value="{{ $mulImage->id }}">
+                            <input name="multiple_image[]" type="file" class="form-control" id="multiple_image{{ $mulImage->id }}" onchange="document.getElementById('multiple_imagePre{{ $mulImage->id }}').src = window.URL.createObjectURL(this.files[0])">
+                            @error('multiple_image')
+                                <div class="text-danger fa fa py-2 pl-2">
+                                <i class="fas fa-exclamation-triangle"></i>{{ $message }}
+                                </div>
+                            @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-2 mt-2">
+                            <img width="100%" src="{{ asset('products/image-gallery/'.$mulImage->image_name) }}" draggable="false"  id="multiple_imagePre{{ $mulImage->id }}" alt="{{ $productView->title }}">
+                        </div>
+                      @endforeach
+                      <div class="col-md-6 my-auto mt-2">
+                        <div class="form-group">
+                        <label for="multiple_image_new">Add Image to Gallery</label>
+                        <input name="multiple_image_new[]" type="file" class="form-control" id="multiple_image_new" multiple>
+                        {{-- @error('multiple_image[]')
+                            <div class="text-danger fa fa py-2 pl-2">
+                            <i class="fas fa-exclamation-triangle"></i>{{ $message }}
+                            </div>
+                        @enderror --}}
+                        </div>
+                    </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="category_id">Category</label>

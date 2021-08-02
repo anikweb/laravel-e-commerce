@@ -22,6 +22,6 @@ class Product extends Model
         return $this->hasMany(ProductAttribute::class,'product_id');
     }
     function imageGallery(){
-        return $this->belongsTo(ProductImageGallery::class,'product_id');
+        return $this->hasMany(ProductImageGallery::class,'product_id');
     }
 }

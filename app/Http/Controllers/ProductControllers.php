@@ -129,6 +129,36 @@ class ProductControllers extends Controller
             $product->thumbnail = $ext;
         }
         $product->save();
+        // gallery image change/update start
+        if($request->hasFile('multiple_image')){
+            foreach ($request->file('multiple_image') as $key => $glImage) {
+                $gl = ProductImageGallery::findOrFail($request->mulImgId[$key]);
+                $old_glImage = public_path('products/image-gallery/'.$gl->image_name);
+                if(file_exists($old_glImage)){
+                    unlink($old_glImage);
+                }
+                $ext = Str::slug($product->title).'-'.Str::random(10).'.'.$glImage->getClientOriginalExtension();
+                $destination = public_path('products/image-gallery/'.$ext);
+                Image::make($glImage)->save($destination);
+                $gl->image_name = $ext;
+                $gl->save();
+            }
+        }
+        // gallery image change/update end
+        // gallery image add new start
+        if($request->hasFile('multiple_image_new')){
+            foreach ($request->file('multiple_image_new') as $key => $glImageNew) {
+                $gl = new ProductImageGallery;
+                $ext = Str::slug($product->title).'-'.Str::random(10).'.'.$glImageNew->getClientOriginalExtension();
+                $destination = public_path('products/image-gallery/'.$ext);
+                Image::make($glImageNew)->save($destination);
+                $gl->image_name = $ext;
+                $gl->product_id = $product->id;
+                $gl->save();
+            }
+        }
+        // gallery image add new end
+        // attribute update start
         foreach($request->attrId as $key => $attrId){
             if($attrId !=''){
                 $attr = ProductAttribute::findOrFail($attrId);
@@ -150,6 +180,7 @@ class ProductControllers extends Controller
                 $attr->save();
             }
         }
+        // attribute update end
         return redirect('products-list')->with('success','Product Updated');
     }
 }

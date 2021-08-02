@@ -10,6 +10,6 @@ class ProductImageGallery extends Model
     use HasFactory;
 
     function product(){
-        return $this->hasMany(Product::class,'product_id');
+        return $this->belongsTo(Product::class,'product_id');
     }
 }
