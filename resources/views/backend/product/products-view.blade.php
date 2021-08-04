@@ -67,7 +67,7 @@
                           </td>
                           <td>{{ $prodViewLoop->description }}</td>
                           <td>
-                            <img width="100" src="{{ asset('products/thumbnails/'.$prodViewLoop->thumbnail) }}" alt="{{ $prodViewLoop->title }}">
+                            <img width="100" src="{{ asset('products/thumbnails/'.$prodViewLoop->created_at->format('Y/m/').$prodViewLoop->id.'/'.$prodViewLoop->thumbnail) }}" alt="{{ $prodViewLoop->title }}">
                           </td>
                           <td>{{ $prodViewLoop->created_at->diffForHumans() }}</td>
                           <td class="text-center">

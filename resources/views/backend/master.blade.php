@@ -216,14 +216,12 @@
                   <p>Dashboard</p>
                 </a>
             </li>
-          <li class="nav-item @yield('categoryOpen')">
-            <a href="{{ route('frontend') }}" class="nav-link" target="_blank">
-                <i class="fas fa-book"></i>
-              <p>
-                 Frontend
-              </p>
-            </a>
-          </li>
+            <li class="nav-item @yield('categoryOpen')">
+                <a href="{{ route('frontend') }}" class="nav-link" target="_blank">
+                <i class="nav-icon fa fa-book"></i>
+                <p>Frontend</p>
+                </a>
+            </li>
            {{-- Categories --}}
            <li class="nav-item @yield('categoryOpen')">
             <a href="#" class="nav-link @yield('categoryActive')">

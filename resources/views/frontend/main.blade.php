@@ -1,7 +1,5 @@
 @extends('frontend.master')
 @section('content')
-
-
     <!-- slider-area start -->
     <div class="slider-area">
         <div class="swiper-container">
@@ -276,7 +274,7 @@
                     <div class="product-wrap">
                         <div class="product-img">
                             <span>Sale</span>
-                            <img src="{{ asset('products/thumbnails/'.$product->thumbnail) }}" alt="{{ $product->title }}">
+                            <img src="{{ asset('products/thumbnails/'.$product->created_at->format('Y/m/').$product->id.'/'.$product->thumbnail) }}" alt="{{ $product->title }}">
                             <div class="product-icon flex-style">
                                 <ul>
                                     <li><a data-toggle="modal" data-target="#productModal{{ $product->id }}" href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
@@ -309,7 +307,7 @@
                             </button>
                             <div class="modal-body d-flex">
                                 <div class="product-single-img w-50">
-                                    <img src="{{ asset('products/thumbnails/'.$product->thumbnail) }}" alt="{{ $product->title }}">
+                                    <img src="{{ asset('products/thumbnails/'.$product->created_at->format('Y/m/').$product->id.'/'.$product->thumbnail) }}" alt="{{ $product->title }}">
                                 </div>
                                 <div class="product-single-content w-50">
                                     <h3>{{ $product->title }}</h3>
@@ -334,8 +332,9 @@
                                     </ul>
                                     <ul class="cetagory">
                                         <li>Categories:</li>
-                                        <li><a href="#">Honey,</a></li>
-                                        <li><a href="#">Olive Oil</a></li>
+                                        <li><a href="#">{{ $product->category->category_name }}</a></li>
+
+
                                     </ul>
                                     <ul class="socil-icon">
                                         <li>Share :</li>

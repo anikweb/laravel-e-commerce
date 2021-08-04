@@ -104,7 +104,9 @@
                     <div class="col-lg-7 d-none d-lg-block">
                         <nav class="mainmenu">
                             <ul class="d-flex">
-                                <li class="active"><a href="index.html">Home</a></li>
+                                <li class="{{ Route::is('frontend') ? 'active' : '' }}">
+                                    <a href="{{ route('frontend') }}">Home</a>
+                                </li>
                                 <li><a href="about.html">About</a></li>
                                 <li>
                                     <a href="javascript:void(0);">Shop <i class="fa fa-angle-down"></i></a>
@@ -116,16 +118,12 @@
                                         <li><a href="wishlist.html">Wishlist</a></li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown_style">
-                                        <li><a href="about.html">About Page</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
-                                        <li><a href="cart.html">Shopping cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                    </ul>
+                                <li class="{{ Route::is('cartView') ? 'active' : '' }}">
+                                    <a href="{{ route('cartView') }}">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Cart
+                                        <span class="badge badge-danger">5</span>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>

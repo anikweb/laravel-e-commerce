@@ -30,6 +30,7 @@ use App\Http\Controllers\ProductControllers;
 Route::get('/',[FrontendController::class, 'frontend'])->name('frontend');
 Route::get('/product-details/{slug}',[FrontendController::class, 'productDetails'])->name('productDetails');
 Route::get('/get/color/size/{cid}/{pid}',[FrontendController::class, 'getColorSizeId'])->name('getColorSizeId');
+Route::get('/carts',[FrontendController::class, 'cartView'])->name('cartView');
 // Dashboard
 Route::get('dashboard',[BackendControllers::class, 'dashboard'])->name('dashboard');
 // Categories

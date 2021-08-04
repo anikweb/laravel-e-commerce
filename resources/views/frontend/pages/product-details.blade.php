@@ -24,25 +24,44 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="product-single-img">
+                    {{-- product all images start  --}}
                     <div class="product-active owl-carousel">
+                        {{-- Thumbnail image start --}}
+                        <div class="item">
+                            <img style="max-width: 400px !important" src="{{ asset('products/thumbnails/'.$product->created_at->format('Y/m/').$product->id.'/'.$product->thumbnail) }}" alt="{{ $product->title }}">
+                        </div>
+                        {{-- Thumbnail image end --}}
+                        {{-- gallery image loop start  --}}
                         @foreach ($imageGallery as $gImage)
                             <div class="item">
-                                <img style="max-width: 400px !important" src="{{ asset('products/image-gallery/'.$gImage->image_name) }}" alt="{{ $product->title }}">
+                                <img style="max-width: 400px !important" src="{{ asset('products/image-gallery/'.$product->created_at->format('Y/m/').$product->id.'/'.$gImage->image_name) }}" alt="{{ $product->title }}">
                             </div>
                         @endforeach
+                        {{-- gallery image loop end  --}}
                     </div>
+                    {{-- product all images end  --}}
+                    {{-- product  images bar start  --}}
                     <div class="product-thumbnil-active  owl-carousel">
+                        {{-- Thumbnail image start --}}
+                        <div class="item">
+                            <img style="max-width: 100px !important" src="{{ asset('products/thumbnails/'.$product->created_at->format('Y/m/').$product->id.'/'.$product->thumbnail) }}" alt="{{ $product->title }}">
+                        </div>
+                        {{-- Thumbnail image end --}}
+                        {{-- all image loop start --}}
                         @foreach ($imageGallery as $gImage)
                             <div class="item">
-                                <img style="max-width: 100px !important" src="{{ asset('products/image-gallery/'.$gImage->image_name) }}" alt="{{ $product->title }}">
+                                <img style="max-width: 100px !important" src="{{ asset('products/image-gallery/'.$product->created_at->format('Y/m/').$product->id.'/'.$gImage->image_name) }}" alt="{{ $product->title }}">
                             </div>
                         @endforeach
+                        {{-- all image loop start --}}
                     </div>
+                     {{-- product  images bar end  --}}
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="product-single-content">
                     <h3>{{ $product->title }} <span class="h5 text-muted">(</span> <span class="h5 text-muted"> Available: </span><span class="available h5 text-muted">{{ $product->attribute->sum('quantity') }}</span><span class="h5 text-muted">)</span></h3>
+                    {{-- Rating start --}}
                     <div class="rating-wrap fix">
                         <span class="pull-left price">{{ '$'.$product->attribute->min('offer_price') }}</span>
                         <ul class="rating pull-right">
@@ -54,6 +73,7 @@
                             <li>(05 Customar Review)</li>
                         </ul>
                     </div>
+                    {{-- Rating end --}}
                     {{--  Summary   --}}
                     <p>{{ $product->summary }}</p>
 
@@ -61,7 +81,7 @@
                         <li class="quantity cart-plus-minus">
                             <input type="text" value="1" />
                         </li>
-                        <li><a href="cart.html">Add to Cart</a></li>
+                        <li><a href="{{ route('cartView') }}">Add to Cart</a></li>
                     </ul>
                     <ul class="cetagory mb-0">
                         <li>Color:</li>
