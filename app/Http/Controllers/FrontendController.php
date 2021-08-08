@@ -30,12 +30,9 @@ class FrontendController extends Controller
         $sizes = ProductAttribute::where('product_id',$pid)->where('color_id',$cid)->get();
         $outpot = '';
         foreach ($sizes as $key => $size) {
-            $outpot =  $outpot.'<input class="sizeCheck" style="cursor: pointer;" data-price="'.$size->offer_price.'" data-quantity="'.$size->quantity.'" id="size" type="radio" value="" name="size"><label style="cursor: pointer;" for="size">'.'  '. $size->size->size_name .'</label>';
+            $outpot =  $outpot.'<input class="sizeCheck" style="cursor: pointer;" data-price="'.$size->offer_price.'" data-quantity="'.$size->quantity.'" id="size" type="radio" value="'.$size->size_id.'" name="size_id"><label style="cursor: pointer;" for="size">'.'  '. $size->size->size_name .'</label>';
         }
         // return response()->json($sizes);
         echo $outpot;
-    }
-    function cartView(){
-        return view('frontend/pages/carts');
     }
 }

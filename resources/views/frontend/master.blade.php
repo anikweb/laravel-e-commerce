@@ -118,13 +118,13 @@
                                         <li><a href="wishlist.html">Wishlist</a></li>
                                     </ul>
                                 </li>
-                                <li class="{{ Route::is('cartView') ? 'active' : '' }}">
+                                {{-- <li class="{{ Route::is('cartView') ? 'active' : '' }}">
                                     <a href="{{ route('cartView') }}">
                                         <i class="fa fa-shopping-cart"></i>
                                         Cart
-                                        <span class="badge badge-danger">5</span>
+                                        <span class="badge badge-danger">0</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown_style">
@@ -171,7 +171,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
+                                <a href="{{ route('cartView') }}"><i class="flaticon-shop"></i> <span>3</span></a>
                                 <ul class="cart-wrap dropdown_style">
                                     <li class="cart-items">
                                         <div class="cart-img">

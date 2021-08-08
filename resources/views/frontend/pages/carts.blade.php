@@ -8,7 +8,7 @@
                     <div class="breadcumb-wrap text-center">
                         <h2>Shopping Cart</h2>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{ route('frontend') }}">Home</a></li>
                             <li><span>Shopping Cart</span></li>
                         </ul>
                     </div>
@@ -35,16 +35,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="images"><img src="{{ asset('front/images/cart/1.jpg') }}" alt=""></td>
-                                    <td class="product"><a href="single-product.html">Neture Honey</a></td>
-                                    <td class="ptice">$139.00</td>
-                                    <td class="quantity cart-plus-minus">
-                                        <input type="text" value="1" />
-                                    </td>
-                                    <td class="total">$139.00</td>
-                                    <td class="remove"><i class="fa fa-times"></i></td>
-                                </tr>
+                                @forelse ($cartView as $cart)
+                                    <tr>
+                                        <td class="images">
+                                            <img src="{{ asset('products/thumbnails/'.$cart->product->created_at->format('Y/m').'/'.$cart->product->id.'/'.$cart->product->thumbnail) }}" alt="">
+                                        </td>
+                                        <td class="product">
+                                            <a href="">{{ $cart->product->title }} <br> (Color: {{ $cart->color->color_name }}, Size: {{ $cart->size->size_name }} )</a>
+                                        </td>
+                                        <td class="ptice">
+                                            <span>${{ App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price }}</span>
+                                        </td>
+                                        <td class="quantity cart-plus-minus">
+                                            <input type="text" value="{{ $cart->quantity }}" />
+                                        </td>
+                                        <td class="total">
+                                            <span>${{ App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity }}</span>
+                                        </td>
+                                        <td class="remove"><i class="fa fa-times"></i></td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td>Empty</td>
+                                    </tr>
+                                @endforelse
+
                             </tbody>
                         </table>
                         <div class="row mt-60">

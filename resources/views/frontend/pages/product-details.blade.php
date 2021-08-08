@@ -9,7 +9,7 @@
                 <div class="breadcumb-wrap text-center">
                     <h2>{{ $product->title }}</h2>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('frontend') }}">Home</a></li>
                         <li><span>Shop</span></li>
                     </ul>
                 </div>
@@ -59,58 +59,66 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="product-single-content">
-                    <h3>{{ $product->title }} <span class="h5 text-muted">(</span> <span class="h5 text-muted"> Available: </span><span class="available h5 text-muted">{{ $product->attribute->sum('quantity') }}</span><span class="h5 text-muted">)</span></h3>
-                    {{-- Rating start --}}
-                    <div class="rating-wrap fix">
-                        <span class="pull-left price">{{ '$'.$product->attribute->min('offer_price') }}</span>
-                        <ul class="rating pull-right">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li>(05 Customar Review)</li>
+                <form action="{{ route('cartPost') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <div class="product-single-content">
+                        <h3>{{ $product->title }} <span class="h5 text-muted">(</span> <span class="h5 text-muted"> Available: </span><span class="available h5 text-muted">{{ $product->attribute->sum('quantity') }}</span><span class="h5 text-muted">)</span></h3>
+                        {{-- Rating start --}}
+                        <div class="rating-wrap fix">
+                            <span class="pull-left price">{{ '$'.$product->attribute->min('offer_price') }}</span>
+                            <ul class="rating pull-right">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li>(05 Customar Review)</li>
+                            </ul>
+                        </div>
+                        {{-- Rating end --}}
+                        {{--  Summary   --}}
+                        <p>{{ $product->summary }}</p>
+
+                        <ul class="input-style">
+                            <li class="quantity cart-plus-minus">
+                                <input type="text" name="quantity" value="1" />
+                            </li>
+                            <li>
+                                <button class="btn btn-primary" type="submit">Add to Cart</button>
+                            </li>
+                        </ul>
+                        <ul class="cetagory mb-0">
+                            <li>Color:</li>
+                            <li>
+                                @foreach ($groupColor as $gColor)
+                                <input class="color_id" style="cursor: pointer;" data-product="{{ $product->id }}" id="color{{$gColor[0]->color->id}}" type="radio" value="{{ $gColor[0]->color->id }}" name="color_id">
+                                <label style="cursor: pointer;" for="color{{$gColor[0]->color->id}}">{{ $gColor[0]->color->color_name }}</label>
+                                @endforeach
+                            </li>
+                        </ul>
+                        <ul class="size">
+                            <li class="sizeName"></li>
+                            <li class="sizeAdd"></li>
+                        </ul>
+                        <ul class="cetagory">
+                            <li>Categories:</li>
+                            <li>{{ $product->category->category_name }}</li>
+                        </ul>
+
+                        <ul class="socil-icon">
+                            <li>Share :</li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
-                    {{-- Rating end --}}
-                    {{--  Summary   --}}
-                    <p>{{ $product->summary }}</p>
-
-                    <ul class="input-style">
-                        <li class="quantity cart-plus-minus">
-                            <input type="text" value="1" />
-                        </li>
-                        <li><a href="{{ route('cartView') }}">Add to Cart</a></li>
-                    </ul>
-                    <ul class="cetagory mb-0">
-                        <li>Color:</li>
-                        <li>
-                            @foreach ($groupColor as $gColor)
-                            <input class="color_id" style="cursor: pointer;" data-product="{{ $product->id }}" id="color{{$gColor[0]->color->id}}" type="radio" value="{{ $gColor[0]->color->id }}" name="color">
-                            <label style="cursor: pointer;" for="color{{$gColor[0]->color->id}}">{{ $gColor[0]->color->color_name }}</label>
-                            @endforeach
-                        </li>
-                    </ul>
-                    <ul class="size">
-                        <li class="sizeName"></li>
-                        <li class="sizeAdd"></li>
-                    </ul>
-                    <ul class="cetagory">
-                        <li>Categories:</li>
-                        <li>{{ $product->category->category_name }}</li>
-                    </ul>
-
-                    <ul class="socil-icon">
-                        <li>Share :</li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                    </ul>
-                </div>
+                </form>
             </div>
+
+
         </div>
         <div class="row mt-60">
             <div class="col-12">

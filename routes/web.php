@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BackendControllers;
+use App\Http\Controllers\CartControllers;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CategoryControllers;
 use App\Http\Controllers\SubcategoryController;
@@ -30,7 +31,9 @@ use App\Http\Controllers\ProductControllers;
 Route::get('/',[FrontendController::class, 'frontend'])->name('frontend');
 Route::get('/product-details/{slug}',[FrontendController::class, 'productDetails'])->name('productDetails');
 Route::get('/get/color/size/{cid}/{pid}',[FrontendController::class, 'getColorSizeId'])->name('getColorSizeId');
-Route::get('/carts',[FrontendController::class, 'cartView'])->name('cartView');
+// carts
+Route::get('/carts',[CartControllers::class, 'cartView'])->name('cartView');
+Route::post('/cart-post',[CartControllers::class, 'cartPost'])->name('cartPost');
 // Dashboard
 Route::get('dashboard',[BackendControllers::class, 'dashboard'])->name('dashboard');
 // Categories

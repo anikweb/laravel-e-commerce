@@ -132,7 +132,7 @@ class ProductControllers extends Controller
     // edit product form view code end
     // edit product post code start
     function updatePostProduct(Request $request){
-        $product = Product::findOrFail($request->product_id);
+        $product = Product::findorFail($request->product_id);
         $product->title = $request->product_title;
         $product->slug = Str::slug($request->product_title);
         $product->Category_id = $request->category_id;

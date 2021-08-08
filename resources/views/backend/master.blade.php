@@ -6,11 +6,13 @@
   <title>AdminLTE 3 | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  {{-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
+  <link rel="stylesheet" href="{{ asset('assets\dist\css/fonts.googleapis.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  {{-- <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
+  <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/ionicons.min.css') }}">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }} ">
   <!-- iCheck -->
@@ -207,31 +209,30 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-            {{-- Dashboard --}}
+            <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+            {{--  Dashboard  --}}
             <li class="nav-item">
                 <a href="{{ url('dashboard') }}" class="nav-link @yield('dashboardActive')">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
                 </a>
             </li>
             <li class="nav-item @yield('categoryOpen')">
                 <a href="{{ route('frontend') }}" class="nav-link" target="_blank">
-                <i class="nav-icon fa fa-book"></i>
-                <p>Frontend</p>
+                    <i class="nav-icon fa fa-eye"></i>
+                    <p> View Website </p>
                 </a>
             </li>
            {{-- Categories --}}
-           <li class="nav-item @yield('categoryOpen')">
+            <li class="nav-item @yield('categoryOpen')">
             <a href="#" class="nav-link @yield('categoryActive')">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Categories
-                <i class="fas fa-angle-left right"></i>
-              </p>
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Categories
+                    <i class="fas fa-angle-left right"></i>
+                </p>
             </a>
-            <ul class="nav nav-treeview" style="@yield('categoryDBlock') background-color:#343A2C ">
+            <ul class="nav nav-treeview" style="@yield('categoryDBlock') background-color:#343A2C">
               <li class="nav-item">
                 <a href="{{ url('add-category') }}" class="nav-link @yield('addCategoryActive')">
                   <i class="fas fa-plus nav-icon"></i>
@@ -382,7 +383,8 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
 <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
-<script src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{-- <script src="//unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+<script src="{{ asset('assets/dist/js/sweetalert.min.js') }}"></script>
 
 @yield('footer_js')
 </body>

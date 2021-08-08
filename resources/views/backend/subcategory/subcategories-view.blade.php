@@ -51,7 +51,7 @@
                               <td>{{ $item->subcategory_name }}</td>
                               <td>{{ $item->category->category_name}}</td>
                               <td>{{ $item->subcategory_slug }}</td>
-                              <td>{{ $item->created_at->format('h:i A,  d-M-Y')}}({{ $item->created_at->diffForHumans() }})</td>
+                              <td>{{ $item->created_at->diffForHumans() }}</td>
                               <td class="text-center">
                                   <a class="btn btn-primary" href="{{ url('edit-subcategory').'/'.$item->id }}"><i class="fas fa-edit text-white"></i> Edit</a>
                                   <a class="btn btn-danger" href="{{ url('delete-subcategory')}}/{{ $item->id }}"><i class="fas fa-trash text-white"></i> Delete</a>

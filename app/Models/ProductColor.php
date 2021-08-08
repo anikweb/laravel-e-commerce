@@ -10,7 +10,7 @@ class ProductColor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    // function attribute(){
-    //     return $this->hasMany(ProductColor::class,'color_id');
-    // }
+    function cart(){
+        return $this->hasMany(Cart::class,'color_id');
+    }
 }

@@ -12,4 +12,7 @@ class ProductSize extends Model
     function attribute(){
         return $this->hasMany(ProductAttribute::class,'size_id');
     }
+    function cart(){
+        return $this->hasMany(Cart::class,'size_id');
+    }
 }
