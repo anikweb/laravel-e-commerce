@@ -35,6 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php $total =0; @endphp
                                 @forelse ($cartView as $cart)
                                     <tr>
                                         <td class="images">
@@ -50,16 +51,27 @@
                                             <input type="text" value="{{ $cart->quantity }}" />
                                         </td>
                                         <td class="total">
-                                            <span>${{ App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity }}</span>
+                                            <span>
+                                               {{
+                                                '$'.App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity
+                                                }}
+                                                @php
+                                                   $total += App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity;
+                                                @endphp
+                                            </span>
+
                                         </td>
-                                        <td class="remove"><i class="fa fa-times"></i></td>
+                                        <td class="remove">
+                                            <a href="{{  }}">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td>Empty</td>
+                                        <td colspan="6">No product to show</td>
                                     </tr>
                                 @endforelse
-
                             </tbody>
                         </table>
                         <div class="row mt-60">
@@ -83,8 +95,8 @@
                                 <div class="cart-total text-right">
                                     <h3>Cart Totals</h3>
                                     <ul>
-                                        <li><span class="pull-left">Subtotal </span>$380.00</li>
-                                        <li><span class="pull-left"> Total </span> $380.00</li>
+                                        <li><span class="pull-left"> Total </span>{{ '$'.$total }}</li>
+                                        <li><span class="pull-left">Subtotal </span>$0</li>
                                     </ul>
                                     <a href="checkout.html">Proceed to Checkout</a>
                                 </div>
