@@ -171,42 +171,29 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ route('cartView') }}"><i class="flaticon-shop"></i> <span>3</span></a>
+                                <a href="{{ route('cartView') }}"><i class="flaticon-shop"></i> <span>{{ totalCart() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{ asset('front/images/cart/1.jpg') }}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{ asset('front/images/cart/3.jpg') }}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{ asset('front/images/cart/2.jpg') }}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @php
+                                        $cartTotalAmount = 0;
+                                    @endphp
+                                    @foreach (cartProducts() as $cartProduct)
+                                        <li class="cart-items">
+                                            <div class="cart-img">
+                                                <img width="80px" src="{{ asset('products/thumbnails/'.$cartProduct->product->created_at->format('Y/m').'/'.$cartProduct->product->id.'/'.$cartProduct->product->thumbnail) }}" alt="{{ $cartProduct->product->title }}">
+                                            </div>
+                                            <div class="cart-content">
+                                                <a href="cart.html">{{ $cartProduct->product->title }}</a>
+                                                <span>QTY : {{ $cartProduct->quantity }}</span>
+                                                <p>${{ App\Models\ProductAttribute::where('product_id',$cartProduct->product_id)->where('color_id',$cartProduct->color_id)->where('size_id',$cartProduct->size_id)->first()->offer_price * $cartProduct->quantity }}</p>
+                                                @php
+                                                    $cartTotalAmount += App\Models\ProductAttribute::where('product_id',$cartProduct->product_id)->where('color_id',$cartProduct->color_id)->where('size_id',$cartProduct->size_id)->first()->offer_price * $cartProduct->quantity;
+                                                @endphp
+                                                <i class="fa fa-times"></i>
+                                            </div>
+                                        </li>
+                                       @endforeach
+
+                                    <li>Subtotol: <span class="pull-right">{{ '$'.$cartTotalAmount }}</span></li>
                                     <li>
                                         <button>Check Out</button>
                                     </li>

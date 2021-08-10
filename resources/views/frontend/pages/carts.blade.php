@@ -39,7 +39,8 @@
                                 @forelse ($cartView as $cart)
                                     <tr>
                                         <td class="images">
-                                            <img src="{{ asset('products/thumbnails/'.$cart->product->created_at->format('Y/m').'/'.$cart->product->id.'/'.$cart->product->thumbnail) }}" alt="">
+                                            <img src="{{ asset('products/thumbnails/'.$cart->product->created_at->format('Y/m').'/'.$cart->product->id.'/'.$cart->product->thumbnail) }}" alt="{{ $cart->product->title
+                                            }}">
                                         </td>
                                         <td class="product">
                                             <a href="">{{ $cart->product->title }} <br> (Color: {{ $cart->color->color_name }}, Size: {{ $cart->size->size_name }} )</a>
@@ -62,7 +63,7 @@
 
                                         </td>
                                         <td class="remove">
-                                            <a href="{{  }}">
+                                            <a href="#">
                                                 <i class="fa fa-times"></i>
                                             </a>
                                         </td>
