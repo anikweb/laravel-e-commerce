@@ -97,7 +97,7 @@
                                     <h3>Cart Totals</h3>
                                     <ul>
                                         <li><span class="pull-left"> Total </span>{{ '$'.$total }}</li>
-                                        <li><span class="pull-left">Subtotal </span>$0</li>
+                                        <li><span class="pull-left">Subtotal </span>${{ $total }}</li>
                                     </ul>
                                     <a href="checkout.html">Proceed to Checkout</a>
                                 </div>

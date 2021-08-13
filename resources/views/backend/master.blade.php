@@ -312,6 +312,43 @@
                 </a>
               </li>
             </ul>
+          </li>
+          {{--  Coupon  --}}
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Coupon
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="background-color:#343A2C ">
+              <li class="nav-item">
+                <a href="{{ route('coupon.create') }}" class="nav-link ">
+                  <i class="fas fa-plus nav-icon"></i>
+                  <p>Add Coupon</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('coupon.index') }}" class="nav-link ">
+                  <i class="fas fa-eye nav-icon"></i>
+                  <p>View Coupon</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fas fa-trash nav-icon"></i>
+                  <p>Trash</p>
+                </a>
+              </li>
+              {{--  <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-trash"></i>
+                    <p></p>
+                </a>
+              </li>  --}}
+            </ul>
+          </li>
             <li class="nav-item">
                 <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
                 <i class="nav-icon fa fa-sign-out-alt"></i>

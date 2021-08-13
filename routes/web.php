@@ -4,6 +4,7 @@ use App\Http\Controllers\BackendControllers;
 use App\Http\Controllers\CartControllers;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CategoryControllers;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductControllers;
 
@@ -72,5 +73,7 @@ Route::get('product-delete/{id}',[ProductControllers::class , 'postProducts'])->
 Route::get('api/get-subcat-list/{cat_id}',[ProductControllers::class , 'getSubCat'])->name('getSubCat');
 Route::get('edit-product/{slug}',[ProductControllers::class , 'editProduct'])->name('editProduct');
 Route::post('product-update-post',[ProductControllers::class , 'updatePostProduct'])->name('updatePostProduct');
+// Coupon
+Route::resource('coupon', CouponController::class);
 
 require __DIR__.'/auth.php';
