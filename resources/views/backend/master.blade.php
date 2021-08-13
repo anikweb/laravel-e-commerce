@@ -314,7 +314,7 @@
             </ul>
           </li>
           {{--  Coupon  --}}
-          <li class="nav-item">
+          <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit') ) menu-is-opening menu-open @endif">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
@@ -322,15 +322,15 @@
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" style="background-color:#343A2C ">
+            <ul class="nav nav-treeview" style="background-color:#343A2C">
               <li class="nav-item">
-                <a href="{{ route('coupon.create') }}" class="nav-link ">
+                <a href="{{ route('coupon.create') }}" class="nav-link @if(Route::is('coupon.create')) active @endif">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add Coupon</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('coupon.index') }}" class="nav-link ">
+                <a href="{{ route('coupon.index') }}" class="nav-link  @if(Route::is('coupon.index')||Route::is('coupon.index')) active @endif">
                   <i class="fas fa-eye nav-icon"></i>
                   <p>View Coupon</p>
                 </a>

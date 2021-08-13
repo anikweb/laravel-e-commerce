@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{ $coupon->coupon_name }}</h1>
+            <h1>Coupon</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -22,39 +22,39 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Coupon</h3>
+                    <h3 class="card-title">{{ $coupon->coupon_name }}</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <form action="#" method="post">
                         @csrf
-                        <table class="table">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Coupon Name</th>
-                                    <th>{{ $coupon->coupon_name }}</th>
+                                    <td>{{ $coupon->coupon_name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Discount Range(%)</th>
-                                    <th>{{ $coupon->discount_range }}</th>
+                                    <td>{{ $coupon->discount_range }}</td>
                                 </tr>
                                 <tr>
                                     <th>Limit</th>
-                                    <th>{{ $coupon->limit }}</th>
+                                    <td>{{ $coupon->limit }}</td>
                                 </tr>
                                 <tr>
                                     <th>Expiry Date</th>
-                                    <th>{{ $coupon->expiry_date }}</th>
+                                    <td>{{ $coupon->expiry_date }}</td>
                                 </tr>
                                 <tr>
                                     <th>Expiry Time</th>
-                                    <th>{{ $coupon->expiry_time }}</th>
+                                    <td>{{ $coupon->expiry_time }}</td>
                                 </tr>
                                 <tr>
                                     <th>Created At</th>
-                                    <th>{{ $coupon->created_at->diffForHumans() }}</th>
+                                    <td>{{ $coupon->created_at->diffForHumans() }}</td>
                                 </tr>
                             </thead>
                         </table>
