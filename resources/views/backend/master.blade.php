@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   {{-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
@@ -314,8 +314,8 @@
             </ul>
           </li>
           {{--  Coupon  --}}
-          <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit') ) menu-is-opening menu-open @endif">
-            <a href="#" class="nav-link">
+          <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit')) menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit')) active @endif">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Coupon
@@ -330,7 +330,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('coupon.index') }}" class="nav-link  @if(Route::is('coupon.index')||Route::is('coupon.index')) active @endif">
+                <a href="{{ route('coupon.index') }}" class="nav-link  @if(Route::is('coupon.index')||Route::is('coupon.index')||Route::is('coupon.show')) active @endif">
                   <i class="fas fa-eye nav-icon"></i>
                   <p>View Coupon</p>
                 </a>

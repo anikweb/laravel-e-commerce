@@ -39,14 +39,15 @@ Route::post('/cart-post',[CartControllers::class, 'cartPost'])->name('cartPost')
 Route::get('dashboard',[BackendControllers::class, 'dashboard'])->name('dashboard');
 // Categories
 Route::get('categories',[CategoryControllers::class, 'categories'])->name('categories');
-Route::get('category-trashed',[CategoryControllers::class, 'trashedCategories'])->name('trashedCategories');
 Route::get('add-category',[CategoryControllers::class, 'AddCategory'])->name('AddCategory');
 Route::post('post-category',[CategoryControllers::class, 'PostCategory'])->name('PostCategory');
-Route::get('delete-category/{id}',[CategoryControllers::class, 'DeleteCategory'])->name('DeleteCategory');
 Route::get('edit-category/{id}',[CategoryControllers::class,'editCategory'])->name('editCategory');
-Route::get('restore-category/{id}',[CategoryControllers::class,'restoreCategory'])->name('restoreCategory');
 Route::post('update-category',[CategoryControllers::class, 'updateCategory'])->name('updateCategory');
+Route::get('delete-category/{id}',[CategoryControllers::class, 'DeleteCategory'])->name('DeleteCategory');
 Route::post('delete-all-categories',[CategoryControllers::class, 'deleteAll'])->name('deleteAll');
+// Trash Category
+Route::get('category-trashed',[CategoryControllers::class, 'trashedCategories'])->name('trashedCategories');
+Route::get('restore-category/{id}',[CategoryControllers::class,'restoreCategory'])->name('restoreCategory');
 Route::post('delete-all-categories-trash',[CategoryControllers::class, 'deleteAllTrash'])->name('deleteAllTrash');
 //  category trash
 Route::get('permanent-delete-category/{id}',[CategoryControllers::class,'permanentCategory'])->name('permanentCategory');
