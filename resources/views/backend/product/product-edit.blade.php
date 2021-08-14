@@ -169,13 +169,13 @@
                                 <div class="multi-field-wrapper">
                                     <div class="multi-fields">
                                         <div class="row multi-field form-group my-2">
-                                            <div class="col-md-10">
+                                            <div class="col-md-12">
                                                 {{-- attribute loop start  --}}
                                                 @foreach ($productView->attribute as $product)
-                                                    <input type="hidden" name="attrId[]" value="{{ $product->id }}">
-                                                    <div class="row">
+                                                    <div class="row multi-field-r-item">
+                                                        <input type="hidden" name="attrId[]" value="{{ $product->id }}">
                                                         {{-- color start  --}}
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="color">Color</label>
                                                                 <select name="color[]" class="form-control" id="color">
@@ -192,7 +192,7 @@
                                                         </div>
                                                         {{-- color end  --}}
                                                         {{-- size start  --}}
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label for="size">Size</label>
                                                                 <select name="size[]" class="form-control" id="size">
@@ -239,13 +239,15 @@
                                                             </div>
                                                         </div>
                                                          {{-- quantity end --}}
-                                                    </div>
+
+                                                        <div class="col-md-2 remove-field outline-danger text-white my-auto">
+                                                            <span class="text-danger" style="cursor:pointer"><i class=" fas fa-minus-circle"></i> Remove</span>
+                                                        </div>
+                                                    </div> <!--row-->
                                                 @endforeach
                                             </div>
                                             {{-- attribute field remove button  --}}
-                                            <div class="col-md-2 remove-field outline-danger text-white my-auto">
-                                                <span class="text-danger" style="cursor:pointer"><i class=" fas fa-minus-circle"></i> Remove</span>
-                                            </div>
+
                                         </div>
                                     </div>
                                 {{-- new attribute add button  --}}
@@ -303,14 +305,25 @@
       }
     });
     // Dynamic Add/Remove Field start
-    $('.multi-field-wrapper').each(function() {
+    // $('.multi-field-wrapper').each(function() {
+    //     var $wrapper = $('.multi-fields', this);
+    //     $(".add-field", $(this)).click(function(e) {
+    //         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+    //     });
+    //     $('.multi-field .remove-field', $wrapper).click(function() {
+    //         if ($('.multi-field', $wrapper).length > 1)
+    //             $(this).parent('.multi-field').remove();
+    //     });
+    // });
+    $('.multi-field-wrapper').each(function(){
         var $wrapper = $('.multi-fields', this);
-        $(".add-field", $(this)).click(function(e) {
-            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+        $('.add-field').click(function(){
+            $('.multi-field-r-item:first-child').clone(true).appendTo($wrapper).find('input').val('');
         });
-        $('.multi-field .remove-field', $wrapper).click(function() {
-            if ($('.multi-field', $wrapper).length > 1)
-                $(this).parent('.multi-field').remove();
+        $('.remove-field').click(function(){
+            if($('.multi-field-r-item', $wrapper).length >1){
+                $(this).parent('.multi-field-r-item').remove();
+            }
         });
     });
     // Dynamic Add/Remove Field end

@@ -245,14 +245,25 @@
       }
     });
     // Dynamic Add/Remove Field
-    $('.multi-field-wrapper').each(function() {
+    // $('.multi-field-wrapper').each(function() {
+    //     var $wrapper = $('.multi-fields', this);
+    //     $(".add-field", $(this)).click(function(e) {
+    //         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+    //     });
+    //     $('.multi-field .remove-field', $wrapper).click(function() {
+    //         if ($('.multi-field', $wrapper).length > 1)
+    //             $(this).parent('.multi-field').remove();
+    //     });
+    // });
+    $('.multi-field-wrapper').each(function(){
         var $wrapper = $('.multi-fields', this);
-        $(".add-field", $(this)).click(function(e) {
-            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+        $('.add-field').click(function(){
+            $('.multi-field:first-child').clone(true).appendTo($wrapper).find('input').val('');
         });
-        $('.multi-field .remove-field', $wrapper).click(function() {
-            if ($('.multi-field', $wrapper).length > 1)
+        $('.remove-field').click(function(){
+            if($('.multi-field', $wrapper).length >1){
                 $(this).parent('.multi-field').remove();
+            }
         });
     });
   </script>
