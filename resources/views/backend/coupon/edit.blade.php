@@ -32,13 +32,14 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form method="POST" action="{{ route('coupon.update',$coupon->id) }}">
+                @method('PUT')
                 @csrf
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="coupon">Coupon Name</label>
-                                <input type="text" name="coupon_name" class="form-control @error('coupon_name') is-invalid @enderror" id="coupon" value="@if(old('coupon_name')){{old('coupon_name')}}@else{{$coupon->coupon_name}}@endif">
+                                <input type="text" name="coupon_name" class="form-control @error('coupon_name') is-invalid @enderror" id="coupon" value="@if(old('coupon_name')){{old('coupon_name')}} @else{{$coupon->coupon_name}}@endif">
                                 @error('coupon_name')
                                   <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
                                 @enderror

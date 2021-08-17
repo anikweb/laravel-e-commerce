@@ -56,7 +56,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="limit" title="How many time wii be use this coupon.">Limit <em class="text-muted">(optional)</em></label>
-                                <input name="limit" type="number" class="form-control @error('limit') is-invalid @enderror" id="limit" value="{{ old('limit') }}">
+                                <input name="limit" type="number" class="form-control @error('limit') is-invalid @enderror" id="limit" placeholder="Enter Your Limit" value="{{ old('limit') }}">
                                 @error('limit')
                                     <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
                                 @enderror

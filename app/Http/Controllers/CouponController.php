@@ -15,7 +15,7 @@ class CouponController extends Controller
     public function index()
     {
         return view('backend.coupon.index',[
-            'coupon' => Coupon::latest()->paginate(10),
+            'coupons' => Coupon::latest()->paginate(10),
         ]);
     }
 
@@ -39,6 +39,16 @@ class CouponController extends Controller
     public function store(Request $request)
     {
         // return $request;
+        $request->validate([
+            'coupon_name'=> 'required|unique:coupons,coupon_name',
+            'discount_range'=>'required',
+            'limit'=>'required',
+            'expiry_date'=>'required',
+
+        ],
+        [
+            'coupon_name.unique' => $request->coupon_name." has already taken."
+        ]);
         $coupon = new Coupon;
         $coupon->coupon_name = $request->coupon_name;
         $coupon->discount_range = $request->discount_range;
@@ -46,7 +56,7 @@ class CouponController extends Controller
         $coupon->expiry_date = $request->expiry_date;
         $coupon->expiry_time = $request->expiry_time;
         $coupon->save();
-        return redirect()->route('coupon.index')->with('success','Coupon Created.');
+        return redirect()->route('coupon.index')->with('success',$coupon->coupon_name.' Created.');
     }
 
     /**
@@ -74,7 +84,6 @@ class CouponController extends Controller
             'coupon'=>$coupon,
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -84,7 +93,24 @@ class CouponController extends Controller
      */
     public function update(Request $request, Coupon $coupon)
     {
-        // return $request;
+        // return $coupon;
+        $request->validate([
+            'coupon_name'=> 'required|unique:coupons,coupon_name,'.$coupon->id,
+            'discount_range'=>'required',
+            'limit'=>'required',
+            'expiry_date'=>'required',
+
+        ],
+        [
+            'coupon_name.unique' => $request->coupon_name." has already taken."
+        ]);
+        $coupon->coupon_name = $request->coupon_name;
+        $coupon->discount_range = $request->discount_range;
+        $coupon->limit = $request->limit;
+        $coupon->expiry_date = $request->expiry_date;
+        $coupon->expiry_time = $request->expiry_time;
+        $coupon->save();
+        return redirect()->route('coupon.index')->with('success',$coupon->coupon_name.' Updated.');
     }
 
     /**
@@ -95,11 +121,34 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
-        // if($coupon->delete()){
-        //     return back()->with('success','Coupon Deleted.');
-        // }else{
-        //     return back()->with('fail','failed to delete coupon.');
+        // return $coupon;
+        $coupon->delete();
+        return back()->with('success','Coupon deleted.');
+    }
+    /**
+     * Display the Trash
+     *
+     * You need to create a custom route in web.php
+     *
+     */
+    public function trash()
+    {
+        return view('backend.coupon.trash',[
+            'trash' => Coupon::onlyTrashed()->latest()->paginate(10),
+        ]);
+    }
 
-        // }
+    /**
+     * Restore the Trash
+     *
+     * You need to create a custom route in web.php
+     *
+     */
+
+    public function restore($id)
+    {
+       $trash = Coupon::onlyTrashed()->findOrFail($id);
+       $trash->restore();
+       return back()->with('success',$trash->coupon_name.' Restore');
     }
 }

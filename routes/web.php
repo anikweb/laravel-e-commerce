@@ -67,14 +67,16 @@ Route::post('delete-all-subcategories',[SubcategoryController::class, 'deleteAll
 Route::post('delete-all-subcategories-trash',[SubcategoryController::class, 'deleteAllTrashSubcategories'])->name('deleteAllTrashSubcategories');
 // Products
 Route::get('products-list',[ProductControllers::class , 'viewProducts'])->middleware(['auth'])->name('viewProducts');
-Route::get('add-product',[ProductControllers::class , 'addProducts'])->name('addProducts');
-Route::post('post-product',[ProductControllers::class , 'postProducts'])->name('postProducts');
-Route::get('product-delete/{id}',[ProductControllers::class , 'postProducts'])->name('postProducts');
+Route::get('add-product',[ProductControllers::class , 'addProducts'])->middleware(['auth'])->name('addProducts');
+Route::post('post-product',[ProductControllers::class , 'postProducts'])->middleware(['auth'])->name('postProducts');
+Route::get('product-delete/{id}',[ProductControllers::class , 'postProducts'])->middleware(['auth'])->name('postProducts');
 // ajax for subcategory
-Route::get('api/get-subcat-list/{cat_id}',[ProductControllers::class , 'getSubCat'])->name('getSubCat');
-Route::get('edit-product/{slug}',[ProductControllers::class , 'editProduct'])->name('editProduct');
-Route::post('product-update-post',[ProductControllers::class , 'updatePostProduct'])->name('updatePostProduct');
+Route::get('api/get-subcat-list/{cat_id}',[ProductControllers::class , 'getSubCat'])->middleware(['auth'])->name('getSubCat');
+Route::get('edit-product/{slug}',[ProductControllers::class , 'editProduct'])->middleware(['auth'])->name('editProduct');
+Route::post('product-update-post',[ProductControllers::class , 'updatePostProduct'])->middleware(['auth'])->name('updatePostProduct');
 // Coupon
+Route::get('coupon/trash',[CouponController::class , 'trash'])->middleware(['auth'])->name('coupon.trash');
+Route::get('coupon/trash/{id}/restore',[CouponController::class , 'restore'])->middleware(['auth'])->name('coupon.restore');
 Route::resource('coupon', CouponController::class);
 
 require __DIR__.'/auth.php';

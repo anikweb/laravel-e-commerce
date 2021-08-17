@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>All Coupon</h1>
+            <h1>Coupon Trash</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">All Coupon</li>
+              <li class="breadcrumb-item active">Coupon Trash</li>
             </ol>
           </div>
         </div>
@@ -24,11 +24,11 @@
           <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">All Coupon </h3>
+                    <h3 class="card-title">Coupon Trash </h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    {{-- <form action="#" method="post"> --}}
+                    <form action="#" method="post">
                         @csrf
                         <table class="table table-bordered">
                             <thead>
@@ -41,23 +41,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($coupons as  $couponItem)
+                                @forelse ($trash as $couponItem)
                                     <tr>
                                         <td><input type="checkbox" name="delete[]" value="{{ $couponItem->id }}"></td>
-                                        <td>{{ $coupons->firstItem() + $loop->index }}</td>
+                                        <td>{{ $trash->firstItem() + $loop->index }}</td>
                                         <td>{{ $couponItem->coupon_name }}</td>
                                         <td>{{ $couponItem->updated_at->diffForHumans() }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-success" href="{{ route('coupon.show',$couponItem->id) }}"> <i class="fas fa-eye text-white"></i> Details</a>
-                                            <a class="btn btn-info" href="{{ route('coupon.edit',$couponItem->id) }}"> <i class="fas fa-edit text-white"></i> Edit</a>
-                                            <form action="{{ route('coupon.destroy',$couponItem) }}" method="POST" style="display: inline-block">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fas fa-trash text-white "></i>
-                                                    <span> Delete</span>
-                                                </button>
-                                            </form>
+                                            <a class="btn btn-info" href="#"> <i class="fas fa-eye text-white"></i> Details</a>
+                                            <a class="btn btn-success" href="{{ route('coupon.restore',$couponItem->id) }}"> <i class="fas fa-undo text-white"></i> Restore</a>
                                         </td>
                                     </tr>
                                 @empty
@@ -65,17 +57,17 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @if ($coupons->count() >0)
-                            <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="arrow_ltr.png">
-                            <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl" style="cursor: pointer;">Check All</label>
-                            <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
-                        @endif
-                    {{-- </form> --}}
+                    @if ($trash->count() >0)
+                        <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="arrow_ltr.png">
+                        <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl" style="cursor: pointer;">Check All</label>
+                        <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
+                    @endif
+                     </form>
                 </div>
                 <!-- /.card-body -->
 
               <div class="card-footer clearfix">
-                {{ $coupons->links() }}
+                {{ $trash->links() }}
               </div>
             </div>
             <!-- /.card -->
@@ -155,9 +147,9 @@
     //         }
     //     });
     // });
-// $('#checkAll').click(function(){
-    //     $('input:checkbox').not(this).prop('checked', this.checked);
-    // });
+    $('#checkAll').click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
   </script>
 
 @endsection

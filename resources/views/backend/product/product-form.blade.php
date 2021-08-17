@@ -90,7 +90,7 @@
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label for="subCategory_id">Sub-Category <span class="text-danger">*</span> </label>
+                          <label for="subCategory">Sub-Category <span class="text-danger">*</span> </label>
                           <select name="subCategory_id" id="subCategory" class="form-control @error('subCategory_id') is-invalid @enderror">
                             {{-- ajax loop --}}
                           </select>
