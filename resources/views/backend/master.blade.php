@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @elseif(Route::is('coupon.edit')) Edit Coupon @endif </title>
+  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @elseif(Route::is('coupon.edit')) Edit Coupon @elseif(Route::is('coupon.trash.details')) Trash Details @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   {{-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
@@ -314,8 +314,8 @@
             </ul>
           </li>
           {{--  Coupon  --}}
-          <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit') || Route::is('coupon.trash')) menu-is-opening menu-open @endif">
-            <a href="#" class="nav-link @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit')|| Route::is('coupon.trash')) active @endif">
+          <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit') || Route::is('coupon.trash')||Route::is('coupon.trash.details')) menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit')|| Route::is('coupon.trash')||Route::is('coupon.trash.details')) active @endif">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Coupon
@@ -336,7 +336,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="{{ route('coupon.trash') }}" class="nav-link @if(Route::is('coupon.trash')) active @endif">
+                <a href="{{ route('coupon.trash') }}" class="nav-link @if(Route::is('coupon.trash')||Route::is('coupon.trash.details')) active @endif">
                   <i class="fas fa-trash nav-icon"></i>
                   <p>Trash</p>
                 </a>
@@ -373,8 +373,8 @@
       @php
          $currentYear = date('Y')
       @endphp
-    <strong>Copyright &copy; {{ $currentYear.'-'.($currentYear+1) }} <span>Developmed by</span> <a target="_blank" title="https://anikkumarnandi.com" href="https://anikkumarnandi.com">Anik Kumar Nandi</a>.</strong>
-    All rights reserved.
+    <strong>Copyright &copy; {{ $currentYear.'-'.($currentYear+1) }} <span class="text-muted">All rights reserved.</span> <span>Developed by</span> <a target="_blank" title="https://anikkumarnandi.com" href="https://anikkumarnandi.com">Anik Kumar Nandi</a>.</strong>
+
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.1.0
     </div>

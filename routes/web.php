@@ -77,6 +77,7 @@ Route::post('product-update-post',[ProductControllers::class , 'updatePostProduc
 // Coupon
 Route::get('coupon/trash',[CouponController::class , 'trash'])->middleware(['auth'])->name('coupon.trash');
 Route::get('coupon/trash/{id}/restore',[CouponController::class , 'restore'])->middleware(['auth'])->name('coupon.restore');
+Route::get('coupon/trash/{id}/details',[CouponController::class , 'trashDetails'])->middleware(['auth'])->name('coupon.trash.details');
 Route::resource('coupon', CouponController::class);
 
 require __DIR__.'/auth.php';

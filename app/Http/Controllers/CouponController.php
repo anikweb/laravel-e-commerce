@@ -151,4 +151,11 @@ class CouponController extends Controller
        $trash->restore();
        return back()->with('success',$trash->coupon_name.' Restore');
     }
+
+    public function trashDetails($id)
+    {
+        return view('backend.coupon.trash-show',[
+            'coupon' =>Coupon::onlyTrashed()->findOrFail($id),
+        ]);
+    }
 }

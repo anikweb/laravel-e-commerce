@@ -48,7 +48,7 @@
                                         <td>{{ $couponItem->coupon_name }}</td>
                                         <td>{{ $couponItem->updated_at->diffForHumans() }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-info" href="#"> <i class="fas fa-eye text-white"></i> Details</a>
+                                            <a class="btn btn-info" href="{{ route('coupon.trash.details',$couponItem->id) }}"> <i class="fas fa-eye text-white"></i> Details</a>
                                             <a class="btn btn-success" href="{{ route('coupon.restore',$couponItem->id) }}"> <i class="fas fa-undo text-white"></i> Restore</a>
                                         </td>
                                     </tr>
