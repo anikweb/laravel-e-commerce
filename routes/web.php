@@ -34,6 +34,7 @@ Route::get('/product-details/{slug}',[FrontendController::class, 'productDetails
 Route::get('/get/color/size/{cid}/{pid}',[FrontendController::class, 'getColorSizeId'])->name('getColorSizeId');
 // carts
 Route::get('/carts',[CartControllers::class, 'cartView'])->name('cartView');
+Route::get('/carts/{coupon}',[CartControllers::class, 'cartView']);
 Route::post('/cart-post',[CartControllers::class, 'cartPost'])->name('cartPost');
 // Dashboard
 Route::get('dashboard',[BackendControllers::class, 'dashboard'])->name('dashboard');

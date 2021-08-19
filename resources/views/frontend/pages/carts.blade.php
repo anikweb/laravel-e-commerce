@@ -22,91 +22,154 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="http://themepresss.com/tf/html/tohoney/cart">
-                        <table class="table-responsive cart-wrap">
-                            <thead>
+                    <table class="table-responsive cart-wrap">
+                        <thead>
+                            <tr>
+                                <th class="images">Image</th>
+                                <th class="product">Product</th>
+                                <th class="ptice">Price</th>
+                                <th class="quantity">Quantity</th>
+                                <th class="total">Total</th>
+                                <th class="remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $total =0; @endphp
+                            @forelse ($cartView as $cart)
                                 <tr>
-                                    <th class="images">Image</th>
-                                    <th class="product">Product</th>
-                                    <th class="ptice">Price</th>
-                                    <th class="quantity">Quantity</th>
-                                    <th class="total">Total</th>
-                                    <th class="remove">Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php $total =0; @endphp
-                                @forelse ($cartView as $cart)
-                                    <tr>
-                                        <td class="images">
-                                            <img src="{{ asset('products/thumbnails/'.$cart->product->created_at->format('Y/m').'/'.$cart->product->id.'/'.$cart->product->thumbnail) }}" alt="{{ $cart->product->title
-                                            }}">
-                                        </td>
-                                        <td class="product">
-                                            <a href="">{{ $cart->product->title }} <br> (Color: {{ $cart->color->color_name }}, Size: {{ $cart->size->size_name }} )</a>
-                                        </td>
-                                        <td class="ptice">
-                                            <span>${{ App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price }}</span>
-                                        </td>
-                                        <td class="quantity cart-plus-minus">
-                                            <input type="text" value="{{ $cart->quantity }}" />
-                                        </td>
-                                        <td class="total">
-                                            <span>
-                                               {{
-                                                '$'.App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity
-                                                }}
-                                                @php
-                                                   $total += App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity;
-                                                @endphp
-                                            </span>
+                                    <td class="images">
+                                        <img src="{{ asset('products/thumbnails/'.$cart->product->created_at->format('Y/m').'/'.$cart->product->id.'/'.$cart->product->thumbnail) }}" alt="{{ $cart->product->title
+                                        }}">
+                                    </td>
+                                    <td class="product">
+                                        {{ $cart->product->title }} <br> (Color: {{ $cart->color->color_name }}, Size: {{ $cart->size->size_name }} )
+                                    </td>
+                                    <td class="ptice">
+                                        <span>${{ App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price }}</span>
+                                    </td>
+                                    <td class="quantity cart-plus-minus">
+                                        <input type="text" value="{{ $cart->quantity }}" />
+                                    </td>
+                                    <td class="total">
+                                        <span>
+                                            {{
+                                            '$'.App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity
+                                            }}
+                                            @php
+                                                $total += App\Models\ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price * $cart->quantity;
+                                            @endphp
+                                        </span>
 
-                                        </td>
-                                        <td class="remove">
-                                            <a href="#">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6">No product to show</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                        <div class="row mt-60">
-                            <div class="col-xl-4 col-lg-5 col-md-6 ">
-                                <div class="cartcupon-wrap">
-                                    <ul class="d-flex">
-                                        <li>
-                                            <button>Update Cart</button>
-                                        </li>
-                                        <li><a href="shop.html">Continue Shopping</a></li>
-                                    </ul>
-                                    <h3>Cupon</h3>
-                                    <p>Enter Your Cupon Code if You Have One</p>
-                                    <div class="cupon-wrap">
-                                        <input type="text" placeholder="Cupon Code">
-                                        <button>Apply Cupon</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 offset-xl-5 col-lg-4 offset-lg-3 col-md-6">
-                                <div class="cart-total text-right">
-                                    <h3>Cart Totals</h3>
-                                    <ul>
-                                        <li><span class="pull-left"> Total </span>{{ '$'.$total }}</li>
-                                        <li><span class="pull-left">Subtotal </span>${{ $total }}</li>
-                                    </ul>
-                                    <a href="checkout.html">Proceed to Checkout</a>
+                                    </td>
+                                    <td class="remove">
+                                        <a href="#">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6">No product to show</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <div class="row mt-60">
+                        <div class="col-xl-4 col-lg-5 col-md-6 ">
+                            <div class="cartcupon-wrap">
+                                <ul class="d-flex">
+                                    <li>
+                                        <button>Update Cart</button>
+                                    </li>
+                                    <li><a href="shop.html">Continue Shopping</a></li>
+                                </ul>
+                                <h3>Coupon</h3>
+                                <p>Enter Your Coupon Code if You Have One</p>
+                                <div class="cupon-wrap" id="coupon_section">
+                                    <input type="text" id="add_coupon_input" @if($coupon) disabled style="background: gray;color: #ccc;" @endif value="{{ $coupon ? $coupon->coupon_name : '' }}" placeholder="Coupon Code">
+                                    @if (session('coupon_fail'))
+                                        <div>
+                                            <span class="text-danger">
+                                                {{ session('coupon_fail') }}
+                                            </span>
+                                        </div>
+                                    @elseif($coupon)
+                                        <div>
+                                            <span class="text-success h6">
+                                                {{ $coupon->coupon_name.' Coupon Applied!' }}
+                                            </span>
+                                        </div>
+                                    @endif
+                                    @if($coupon)
+                                        <a style="padding:10px;width: 150px;height: 45px;position: absolute;right: 0;top: 0;background: #ef4836;color: #fff;text-transform: uppercase;border: none;" type="button" id="add_coupon_btn" href="{{ url()->previous() }}"  >Remove Coupon</a>
+                                    @else
+                                        <button type="button" id="add_coupon_btn">Apply Coupon</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                    </form>
+                        <div class="col-xl-3 offset-xl-5 col-lg-4 offset-lg-3 col-md-6">
+                            <div class="cart-total text-right">
+                                <h3>Cart Totals</h3>
+                                <ul>
+                                    <li><span class="pull-left"> Subtotal </span>{{ '$'.$total }}</li>
+                                    @if ($coupon)
+                                        <li><span class="pull-left">Discount({{ $coupon->discount_range }}%) </span>{{  '$'.discountCounter($total,$coupon->discount_range) }}</li>
+                                        <li><span class="pull-left">Total </span>${{ $total - discountCounter($total,$coupon->discount_range) }}</li>
+                                    @else
+                                        <li><span class="pull-left">Discount </span>$0</li>
+                                        <li><span class="pull-left">Total </span>${{ $total }}</li>
+                                    @endif
+                                </ul>
+                                <a href="checkout.html">Proceed to Checkout</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- cart-area end -->
+@endsection
+@section('footer_js')
+    <script>
+        $(document).ready(function(){
+            $('#add_coupon_btn').click(function(){
+                var coupon_name = $('#add_coupon_input').val();
+                // alert(coupon_name);
+                window.location.href = "{{ route('cartView') }}/"+coupon_name;
+            });
+        });
+        @if(session('success'))
+            toastr["success"]("{{ session('success') }}")
+
+            toastr.options = {
+
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+        @elseif(session('fail'))
+            toastr["error"]("{{ session('fail') }}")
+
+            toastr.options = {
+
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+        @endif
+    </script>
 @endsection

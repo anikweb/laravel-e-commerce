@@ -6,10 +6,18 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductImageGallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class FrontendController extends Controller
 {
     function frontend(){
+        if(Cookie::get('cookie_id') == ''){
+            $cookie_name = 'cookie_id';
+            $cookie_value = time().'-'.Str::random(10);
+            $cookie_duration = 43800;
+            Cookie::queue($cookie_name, $cookie_value, $cookie_duration);
+        }
         return view('frontend.main',[
             'products'=> Product::latest()->limit(8)->get(),
         ]);

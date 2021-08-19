@@ -407,15 +407,12 @@
     </div>
 </div>
 <!-- featured-product-area end -->
-
 @endsection
 @section('footer_js')
     <script>
         $('.color_id').change(function(){
             var colorId = $(this).val();
             var productId = $(this).attr('data-product');
-            // alert(productId);
-            // console.log("{{ url('get/color/size') }}/"+colorId+'/'+productId);
             $.ajax({
                 type: "GET",
                 url: "{{ url('get/color/size') }}/"+colorId+'/'+productId,
@@ -435,6 +432,10 @@
                 }
             });
         });
+        @if(session('success'))
+            toastr["success"]("{{ session('success') }}")
+        @elseif(session('fail'))
+            toastr["error"]("{{ session('fail') }}");
+        @endif
     </script>
-
 @endsection

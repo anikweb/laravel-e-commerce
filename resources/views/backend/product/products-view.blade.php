@@ -122,8 +122,7 @@
 @section('footer_js')
   <script>
     @if(session('success'))
-    toastr["success"]("{{ session('success') }}")
-
+        toastr["success"]("{{ session('success') }}")
     toastr.options = {
 
       "positionClass": "toast-top-right",
@@ -136,6 +135,7 @@
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     }
+
     @endif
     $('#checkAll').click(function(){
       $('input:checkbox').not(this).prop('checked', this.checked);

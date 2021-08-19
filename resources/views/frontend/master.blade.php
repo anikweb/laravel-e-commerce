@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('front/css/styles.css') }}">
     <!-- responsive css -->
     <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css')}} ">
     <!-- modernizr css -->
     <script src="{{ asset('front/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 </head>
@@ -369,6 +370,9 @@
     <script src="{{ asset('front/js/jquery-ui.min.js') }}"></script>
     <!-- main js -->
     <script src="{{ asset('front/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+
     @yield('footer_js')
 </body>
 
