@@ -29,6 +29,15 @@ class CartControllers extends Controller
         ]);
     }
     function cartPost(Request $request){
+        // if($request->quantity){
+        //     return back()->with('quantity_empty','Quantity Required.');
+        // }
+        $request->validate([
+            'quantity' => 'required',
+            'color_id' => 'required',
+            'size_id' => 'required',
+        ]);
+
         if(Cart::where('cookie_id',Cookie::get('cookie_id'))->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->exists()){
            $insert = Cart::where('cookie_id',Cookie::get('cookie_id'))->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->increment('quantity',$request->quantity);
             if($insert){

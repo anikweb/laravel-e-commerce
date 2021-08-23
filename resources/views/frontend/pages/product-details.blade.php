@@ -82,25 +82,44 @@
 
                         <ul class="input-style">
                             <li class="quantity cart-plus-minus">
-                                <input type="text" name="quantity" value="1" />
+                                <input type="text" name="quantity" value="1" class=" @error('quantity') is-invalid @enderror" />
                             </li>
+
                             <li>
                                 <button class="btn btn-primary" type="submit">Add to Cart</button>
                             </li>
                         </ul>
+                        @error('quantity')
+                            <div>
+                                <span class="text-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}</span>
+                            </div>
+                        @enderror
                         <ul class="cetagory mb-0">
                             <li>Color:</li>
                             <li>
                                 @foreach ($groupColor as $gColor)
-                                <input class="color_id" style="cursor: pointer;" data-product="{{ $product->id }}" id="color{{$gColor[0]->color->id}}" type="radio" value="{{ $gColor[0]->color->id }}" name="color_id">
+                                <input class="color_id @error('color_id') is-invalid @enderror" style="cursor: pointer;" data-product="{{ $product->id }}" id="color{{$gColor[0]->color->id}}" type="radio" value="{{ $gColor[0]->color->id }}" name="color_id">
                                 <label style="cursor: pointer;" for="color{{$gColor[0]->color->id}}">{{ $gColor[0]->color->color_name }}</label>
                                 @endforeach
+
                             </li>
                         </ul>
+                        @error('color_id')
+                            <div>
+                                <span class="text-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}</span>
+                            </div>
+                        @enderror
                         <ul class="size">
                             <li class="sizeName"></li>
                             <li class="sizeAdd"></li>
                         </ul>
+                        @if(old('color_id'))
+                            @error('size_id')
+                                <div>
+                                    <span class="text-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}</span>
+                                </div>
+                            @enderror
+                        @endif
                         <ul class="cetagory">
                             <li>Categories:</li>
                             <li>{{ $product->category->category_name }}</li>
