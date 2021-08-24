@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Coupon;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use Illuminate\Support\Facades\Cookie;
@@ -11,16 +12,19 @@ use Illuminate\Support\Facades\Cookie;
 class CartControllers extends Controller
 {
     function cartView($coupon =''){
-        $getDate = date('Y-m-d');
-        $getTime = getdate();
-        $getTime['hours'].':'.$getTime['minutes'].':00';
+
         if($coupon !=''){
             if(!Coupon::where('coupon_name',$coupon)->exists()){
-
                 return redirect('carts/#coupon_section')->with('coupon_fail','Coupon does not exists!');
             }
+            $coupon = Coupon::where('coupon_name',$coupon)->first();
+            $crrntDate = Carbon::today()->format('Y-m-d');
+            if($crrntDate > $coupon->expiry_date){
+                return redirect('carts/#coupon_section')->with('coupon_expired',$coupon->coupon_name.' has expired.');
+            }elseif($coupon->limit ==0){
+                return redirect('carts/#coupon_section')->with('coupon_limit_Err',$coupon->coupon_name.' has no limit.');
+            }
         }
-        $coupon = Coupon::where('coupon_name',$coupon)->first();
         $cookie_id = Cookie::get('cookie_id');
 
         return view('frontend/pages/carts',[

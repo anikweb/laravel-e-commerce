@@ -83,19 +83,35 @@
                                     </li>
                                     <li><a href="shop.html">Continue Shopping</a></li>
                                 </ul>
-                                <h3>Coupon</h3>
+                                <h3 id="coupon_section">Coupon</h3>
                                 <p>Enter Your Coupon Code if You Have One</p>
-                                <div class="cupon-wrap" id="coupon_section">
-                                    <input type="text" id="add_coupon_input" @if($coupon) disabled style="background: gray;color: #ccc;" @endif value="{{ $coupon ? $coupon->coupon_name : '' }}" placeholder="Coupon Code">
+                                <div class="cupon-wrap">
+                                    <input type="text" id="add_coupon_input"  @if($coupon) disabled style="background: gray;color: #ccc;" @endif value="{{ $coupon ? $coupon->coupon_name : '' }}" placeholder="Coupon Code">
                                     @if (session('coupon_fail'))
                                         <div>
                                             <span class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
                                                 {{ session('coupon_fail') }}
+                                            </span>
+                                        </div>
+                                    @elseif (session('coupon_expired'))
+                                        <div>
+                                            <span class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ session('coupon_expired') }}
+                                            </span>
+                                        </div>
+                                    @elseif (session('coupon_limit_Err'))
+                                        <div>
+                                            <span class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ session('coupon_limit_Err') }}
                                             </span>
                                         </div>
                                     @elseif($coupon)
                                         <div>
                                             <span class="text-success h6">
+                                                <i class="fa fa-check-circle"></i>
                                                 {{ $coupon->coupon_name.' Coupon Applied!' }}
                                             </span>
                                         </div>
