@@ -164,16 +164,20 @@ return [
 
 
         /*
-         * Package Service Providers...
+         *
+         *  Package Service Providers...
          *
          */
 
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
 
         /*
-         * Application Service Providers...
+         *
+         *  Application Service Providers...
+         *
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,

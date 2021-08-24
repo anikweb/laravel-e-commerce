@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryControllers;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductControllers;
+use App\Http\Controllers\RoleController;
 
 
 /*
@@ -80,5 +81,7 @@ Route::get('coupon/trash',[CouponController::class , 'trash'])->middleware(['aut
 Route::get('coupon/trash/{id}/restore',[CouponController::class , 'restore'])->middleware(['auth'])->name('coupon.restore');
 Route::get('coupon/trash/{id}/details',[CouponController::class , 'trashDetails'])->middleware(['auth'])->name('coupon.trash.details');
 Route::resource('coupon', CouponController::class);
+Route::resource('role', RoleController::class);
+// Role
 
 require __DIR__.'/auth.php';

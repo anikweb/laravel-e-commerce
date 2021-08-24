@@ -19,9 +19,15 @@ class CartControllers extends Controller
             }
             $coupon = Coupon::where('coupon_name',$coupon)->first();
             $crrntDate = Carbon::today()->format('Y-m-d');
+            $crrntTime = date('H:i:s');
             if($crrntDate > $coupon->expiry_date){
                 return redirect('carts/#coupon_section')->with('coupon_expired',$coupon->coupon_name.' has expired.');
-            }elseif($coupon->limit ==0){
+            }elseif($coupon->expiry_time != ''){
+                if($crrntTime > $coupon->expiry_time){
+                    return redirect('carts/#coupon_section')->with('coupon_expired',$coupon->coupon_name.' has expired.');
+                }
+            }
+            elseif($coupon->limit ==0){
                 return redirect('carts/#coupon_section')->with('coupon_limit_Err',$coupon->coupon_name.' has no limit.');
             }
         }
