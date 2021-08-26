@@ -44,7 +44,7 @@ class RoleController extends Controller
         // return $request;
         $role=Role::create(['name'=>$request->role_name]);
         $role->givePermissionTo($request->permission);
-        return back();
+        return redirect()->route('role.index')->with('success','New Role Created.');
     }
 
     /**
@@ -66,7 +66,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('backend.role.edit',[
+            'roles' => Role::findOrFail($id),
+            'permissions' => Permission::all(),
+        ]);
     }
 
     /**
@@ -78,7 +81,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->syncPermissions($request->permission);
+        return back();
     }
 
     /**

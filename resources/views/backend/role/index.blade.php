@@ -55,8 +55,8 @@
                                         </td>
                                         <td>{{ $role->created_at->diffForHumans() }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-success" href="#"> <i class="fas fa-eye text-white"></i> Details</a>
-                                            <a class="btn btn-info" href="#"> <i class="fas fa-edit text-white"></i> Edit</a>
+                                            <a class="btn btn-success" href="{{ route('role.show',$role->id) }}"> <i class="fas fa-eye text-white"></i> Details</a>
+                                            <a class="btn btn-info" href="{{ route('role.edit',$role->id) }}"> <i class="fas fa-edit text-white"></i> Edit</a>
                                             {{-- <form action="#" method="POST" style="display: inline-block">
                                                 @method('DELETE')
                                                 @csrf
