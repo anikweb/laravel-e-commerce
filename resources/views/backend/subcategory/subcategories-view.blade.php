@@ -34,39 +34,53 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th width="4%"></th>
+                        @can('delete subcategory')
+                            <th width="4%"></th>
+                        @endcan
                         <th width="3%">#</th>
                         <th>Subcategory Name</th>
                         <th>Category</th>
                         <th>Slug</th>
                         <th>Created At</th>
-                        <th class="text-center">Action</th>
+                        @if (auth()->user()->can('edit subcategory')||auth()->user()->can('delete subcategory'))
+                            <th class="text-center">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse ($subCatView as $key=> $item)
-                          <tr>
-                              <td><input type="checkbox" name="delete[]" value="{{ $item->id }}" ></td>
-                              <td>{{ $subCatView->firstItem() + $key }}</td>
-                              <td>{{ $item->subcategory_name }}</td>
-                              <td>{{ $item->category->category_name}}</td>
-                              <td>{{ $item->subcategory_slug }}</td>
-                              <td>{{ $item->created_at->diffForHumans() }}</td>
-                              <td class="text-center">
-                                  <a class="btn btn-primary" href="{{ url('edit-subcategory').'/'.$item->id }}"><i class="fas fa-edit text-white"></i> Edit</a>
-                                  <a class="btn btn-danger" href="{{ url('delete-subcategory')}}/{{ $item->id }}"><i class="fas fa-trash text-white"></i> Delete</a>
-                              </td>
-                          </tr>
+                        @forelse ($subCatView as $key=> $item)
+                            <tr>
+                                @can('delete subcategory')
+                                    <td><input type="checkbox" name="delete[]" value="{{ $item->id }}" ></td>
+                                @endcan
+                                <td>{{ $subCatView->firstItem() + $key }}</td>
+                                <td>{{ $item->subcategory_name }}</td>
+                                <td>{{ $item->category->category_name}}</td>
+                                <td>{{ $item->subcategory_slug }}</td>
+                                <td>{{ $item->created_at->diffForHumans() }}</td>
+                                @if (auth()->user()->can('edit subcategory')||auth()->user()->can('delete subcategory'))
+                                    <td class="text-center">
+                                        @can('edit subcategory')
+                                            <a class="btn btn-primary" href="{{ url('edit-subcategory').'/'.$item->id }}"><i class="fas fa-edit text-white"></i> Edit</a>
+                                        @endcan
+                                        @can('delete subcategory')
+                                            <a class="btn btn-danger" href="{{ url('delete-subcategory')}}/{{ $item->id }}"><i class="fas fa-trash text-white"></i> Delete</a>
+                                        @endcan
+                                    </td>
+                                @endif
+                            </tr>
                           @empty
                           <td class="text-center text-muted" colspan="10">No data available</td>
-                      @endforelse
+                        @endforelse
                     </tbody>
                   </table>
-                  @if ($subCatCount != 0)
-                  <img src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
-                  <input type="checkbox" id="checkAll" > <label for="checkAll" class="checkLbl">Check All</label>
-                  <button type="submit" class="btn deleteAll font-weight-bold "> <i class="fas fa-minus-circle text-danger  "></i> Delete</button>
-                  @endif
+                  @can('delete subcategory')
+                    @if ($subCatCount != 0)
+                        <img src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
+                        <input type="checkbox" id="checkAll" > <label for="checkAll" class="checkLbl">Check All</label>
+                        <button type="submit" class="btn deleteAll font-weight-bold "> <i class="fas fa-minus-circle text-danger  "></i> Delete</button>
+                    @endif
+                  @endcan
 
                 </form>
               </div>

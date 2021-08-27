@@ -14,9 +14,14 @@ class CouponController extends Controller
      */
     public function index()
     {
-        return view('backend.coupon.index',[
-            'coupons' => Coupon::latest()->paginate(10),
-        ]);
+        if(auth()->user()->can('view coupon')){
+            return view('backend.coupon.index',[
+                'coupons' => Coupon::latest()->paginate(10),
+            ]);
+        }else{
+            return abort('404');
+        }
+
     }
 
     /**

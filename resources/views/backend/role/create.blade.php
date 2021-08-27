@@ -38,7 +38,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="role">Role Name</label>
-                                <input name="role_name" type="text" class="form-control @error('role_name') is-invalid @enderror" id="role" placeholder="Create New Coupon" value="{{ old('role_name') }}">
+                                <input name="role_name" type="text" class="form-control @error('role_name') is-invalid @enderror" id="role" placeholder="Enter Role Name" value="{{ old('role_name') }}">
                                 @error('role_name')
                                   <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
                                 @enderror
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="">Permisions</label>
+                                <label for="">Choose Permisions</label>
 
                                     @foreach ($permissions as $permission)
                                     <div class="custom-control custom-checkbox">

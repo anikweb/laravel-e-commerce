@@ -33,38 +33,53 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th width="4%"></th>
+                        @can('delete category')
+                            <th width="4%"></th>
+                        @endcan
                         <th style="width: 3%">#</th>
                         <th>Category Name</th>
                         <th>Slug</th>
                         <th>Created At</th>
-                        <th class="text-center">Action</th>
+                        <th>Last Update</th>
+                        @if(auth()->user()->can('edit category') ||auth()->user()->can('delete category'))
+                            <th class="text-center">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
                       @forelse ($catView as $key=> $catViewLoop)
                         <tr>
-                          <td><input type="checkbox" name="delete[]" value="{{ $catViewLoop->id }}"></td>
+                            @can('delete category')
+                                <td><input type="checkbox" name="delete[]" value="{{ $catViewLoop->id }}"></td>
+                            @endcan
                           <td>{{ $catView->firstItem() + $key }}</td>
                           <td>{{ $catViewLoop->category_name }}</td>
                           <td>{{ $catViewLoop->category_slug }}</td>
-                          <td>{{ $catViewLoop->created_at->format('h:i A,  d-M-Y')}}({{ $catViewLoop->created_at->diffForHumans() }})</td>
-                          <td class="text-center">
-                              <a class="btn btn-primary" href="{{ route('editCategory',$catViewLoop->id) }}"> <i class="fas fa-edit text-white"></i> Edit</a>
-                              <a class="btn btn-danger" href="{{ route('DeleteCategory',$catViewLoop->id) }}"><i class="fas fa-trash text-white"></i> Delete</a>
-                          </td>
+                          <td>{{ $catViewLoop->created_at->format('d-M-Y, h:i A')}}</td>
+                          <td>{{ $catViewLoop->created_at->diffForHumans() }}</td>
+                          @if(auth()->user()->can('edit category') ||auth()->user()->can('delete category'))
+                            <td class="text-center">
+                                @can('edit category')
+                                    <a class="btn btn-primary" href="{{ route('editCategory',$catViewLoop->id) }}"> <i class="fas fa-edit text-white"></i> Edit</a>
+                                @endcan
+                                @can('delete category')
+                                    <a class="btn btn-danger" href="{{ route('DeleteCategory',$catViewLoop->id) }}"><i class="fas fa-trash text-white"></i> Delete</a>
+                                @endcan
+                            </td>
+                            @endif
                         </tr>
                       @empty
                         <td class="text-center text-muted" colspan="10">No data available</td>
                       @endforelse
                     </tbody>
                   </table>
-                  @if ($catViewCount !=0)
-                    <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
-                    <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl">Check All</label>
-                    <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
-
-                  @endif
+                    @can('delete category')
+                        @if ($catViewCount !=0)
+                          <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
+                          <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl">Check All</label>
+                          <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
+                        @endif
+                    @endcan
                 {{-- </form> --}}
               </div>
               <!-- /.card-body -->

@@ -47,7 +47,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url('dashboard') }}" class="nav-link">Home</a>
+        <a href="{{ route('dashboard') }}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -192,7 +192,8 @@
           <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">John Doe</a>
+          <a href="#" class="d-block">@if(Auth::user()) {{ Auth::user()->name }} @else Unknown User @endif</a>
+          <p style="color:#c2c7d0">@foreach (Auth::user()->roles as $role) <em>({{ $role->name }})</em> @endforeach</p>
         </div>
       </div>
       <!-- SidebarSearch Form -->
@@ -224,65 +225,82 @@
                 </a>
             </li>
            {{-- Categories --}}
-            <li class="nav-item @yield('categoryOpen')">
-            <a href="#" class="nav-link @yield('categoryActive')">
+            @if (auth()->user()->can('add category')||auth()->user()->can('view category')||auth()->user()->can('view trash category'))
+                <li class="nav-item @yield('categoryOpen')">
+                    <a href="#" class="nav-link @yield('categoryActive')">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Categories
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="@yield('categoryDBlock') background-color:#343A2C">
+                        @can('add category')
+                            <li class="nav-item">
+                                <a href="{{ url('add-category') }}" class="nav-link @yield('addCategoryActive')">
+                                    <i class="fas fa-plus nav-icon"></i>
+                                    <p>Add Category</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view category')
+                            <li class="nav-item">
+                                <a href="{{ url('categories') }}" class="nav-link @yield('viewCategoryActive')">
+                                    <i class="fas fa-eye nav-icon"></i>
+                                    <p>View Category</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view trash category')
+                            <li class="nav-item">
+                                <a href="{{ url('category-trashed') }}" class="nav-link @yield('trashCategoryActive')">
+                                <i class="fas fa-trash nav-icon"></i>
+                                <p>Trashed Category</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
+          {{-- Sub Category --}}
+            @if (auth()->user()->can('add subcategory')||auth()->user()->can('view subcategory')||auth()->user()->can('view trash subcategory'))
+            <li class="nav-item @yield('subcategoryOpened')">
+                <a href="#" class="nav-link @yield('subcategoryActive')">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                    Categories
+                    Subcategories
                     <i class="fas fa-angle-left right"></i>
                 </p>
-            </a>
-            <ul class="nav nav-treeview" style="@yield('categoryDBlock') background-color:#343A2C">
-              <li class="nav-item">
-                <a href="{{ url('add-category') }}" class="nav-link @yield('addCategoryActive')">
-                  <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Category</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('categories') }}" class="nav-link @yield('viewCategoryActive')">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('category-trashed') }}" class="nav-link @yield('trashCategoryActive')">
-                  <i class="fas fa-trash nav-icon"></i>
-                  <p>Trashed Category</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          {{-- Sub Category --}}
-          <li class="nav-item @yield('subcategoryOpened')">
-            <a href="#" class="nav-link @yield('subcategoryActive')">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Subcategories
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="@yield('subcategoryDBlock') background-color:#343A2C ">
-              <li class="nav-item">
-                <a href="{{ url('add-subcategory') }}" class="nav-link @yield('addSubcategoryActive')">
-                  <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Subcategory</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('subcategories') }}" class="nav-link @yield('viewSubcategoryActive')">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View Subcategory</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('subcategory-trashed') }}" class="nav-link @yield('trashSubcategoryActive')">
-                  <i class="fas fa-trash nav-icon"></i>
-                  <p>Trashed Subcategory</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+                <ul class="nav nav-treeview" style="@yield('subcategoryDBlock') background-color:#343A2C ">
+                    @can('add subcategory')
+                        <li class="nav-item">
+                            <a href="{{ url('add-subcategory') }}" class="nav-link @yield('addSubcategoryActive')">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Add Subcategory</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('view subcategory')
+                        <li class="nav-item">
+                        <a href="{{ url('subcategories') }}" class="nav-link @yield('viewSubcategoryActive')">
+                            <i class="fas fa-eye nav-icon"></i>
+                            <p>View Subcategory</p>
+                        </a>
+                        </li>
+                    @endcan
+                    @can('view trash subcategory')
+                        <li class="nav-item">
+                            <a href="{{ url('subcategory-trashed') }}" class="nav-link @yield('trashSubcategoryActive')">
+                            <i class="fas fa-trash nav-icon"></i>
+                            <p>Trashed Subcategory</p>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+            @endif
             {{-- Products  --}}
             <li class="nav-item @yield('productOpened')">
                 <a href="#" class="nav-link @yield('productActive')">
@@ -369,6 +387,12 @@
                 <a href="{{ route('role.index') }}" class="nav-link">
                   <i class="fas fa-eye nav-icon"></i>
                   <p>View Roles</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('assign.user') }}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Assign User</p>
                 </a>
               </li>
               {{--  <li class="nav-item">

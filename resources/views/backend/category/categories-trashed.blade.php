@@ -34,48 +34,64 @@
                 @csrf
                   <table class="table table-bordered">
                     <thead>
-                      <tr>
-                        <th width='2%'></th>
-                        <th style="width: 3%">#</th>
-                        <th>Category Name</th>
-                        <th>Slug</th>
-                        <th>Created At</th>
-                        <th class="text-center">Action</th>
-                      </tr>
+                        <tr>
+                            @can('permanent delete trash category')
+                                <th width='2%'></th>
+                            @endcan
+                            <th style="width: 3%">#</th>
+                            <th>Category Name</th>
+                            <th>Slug</th>
+                            <th>Created At</th>
+                            <th>Last Update</th>
+                            @if (auth()->user()->can('restore trash category') || auth()->user()->can('permanent delete trash category'))
+                                <th class="text-center">Action</th>
+                            @endcan
+                        </tr>
                     </thead>
                     <tbody>
                       @forelse ($catView as $key=> $catViewLoop)
-                          <tr>
-                              <td><input type="checkbox" name="delete[]" value="{{ $catViewLoop->id }}"></td>
-                              <td>{{ $catView->firstItem() + $key }}</td>
-                              <td>{{ $catViewLoop->category_name }}</td>
-                              <td>{{ $catViewLoop->category_slug }}</td>
-                              <td>{{ $catViewLoop->created_at->format('h:i A,  d-M-Y')}}({{ $catViewLoop->created_at->diffForHumans() }})</td>
-                              <td class="text-center">
-                                  <a class="btn btn-success" href="{{ url('restore-category').'/'.$catViewLoop->id }}"><i class="fas fa-undo text-success text-white"></i> Restore</a>
-                                  @if (session('pDeleteSecurity')!='true')
-                                    <button type="button" class="btn btn-danger DeletePermanent" data-id='{{ $catViewLoop->id }}' data-toggle="modal"data-target="#exampleModalCenter"><i class="fas fa-trash text-white"></i> Permanent Delete</button>
-                                  @else
-                                    <button type="button" class="btn btn-danger DeletePermanentWithSecurity" data-id='{{ $catViewLoop->id }}'>Permanent Delete</button>
-                                  @endif
-                              </td>
-                          </tr>
+                        <tr>
+                            @can('permanent delete trash category')
+                                <td><input type="checkbox" name="delete[]" value="{{ $catViewLoop->id }}"></td>
+                            @endcan
+                            <td>{{ $catView->firstItem() + $key }}</td>
+                            <td>{{ $catViewLoop->category_name }}</td>
+                            <td>{{ $catViewLoop->category_slug }}</td>
+                            <td>{{ $catViewLoop->created_at->format('d-M-Y, h:i A')}}</td>
+                            <td>{{  $catViewLoop->created_at->diffForHumans() }}</td>
+                            @if (auth()->user()->can('restore trash category') || auth()->user()->can('permanent delete trash category'))
+                                <td class="text-center">
+                                @can('restore trash category')
+                                    <a class="btn btn-success" href="{{ url('restore-category').'/'.$catViewLoop->id }}"><i class="fas fa-undo text-success text-white"></i> Restore</a>
+                                @endcan
+                                @can('permanent delete trash category')
+                                    @if (session('pDeleteSecurity')!='true')
+                                        <button type="button" class="btn btn-danger DeletePermanent" data-id='{{ $catViewLoop->id }}' data-toggle="modal"data-target="#exampleModalCenter"><i class="fas fa-trash text-white"></i> Permanent Delete</button>
+                                    @else
+                                        <button type="button" class="btn btn-danger DeletePermanentWithSecurity" data-id='{{ $catViewLoop->id }}'>Permanent Delete</button>
+                                    @endif
+                                @endcan
+                                </td>
+                            @endif
+                        </tr>
                         @empty
                           <td class="text-center text-muted
                           " colspan="10">No data Available</td>
                       @endforelse
                     </tbody>
                   </table>
-                  @if ($catViewCount !=0)
-                    <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
-                    <input type="checkbox" id='checkAll'> <label for='checkAll' class="checkLbl">Check All</label>
-                    <button type="submit" class="btn allDelete font-weight-bold"> <i class="fas fa-minus-circle text-danger"></i> Permanent Delete</button>
-                    <button  class="btn font-weight-bold allDelete" type="button"><i class="fas fa-undo-alt text-success"></i> Restore</button>
-                  @endif
+                  @can('permanent delete trash category')
+
+                    @if ($catViewCount !=0)
+                        <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
+                        <input type="checkbox" id='checkAll'> <label for='checkAll' class="checkLbl">Check All</label>
+                        <button type="submit" class="btn allDelete font-weight-bold"> <i class="fas fa-minus-circle text-danger"></i> Permanent Delete</button>
+                    @endif
+                  @endcan
                 </form>
               </div>
               <!-- /.card-body -->
-             
+
               <div class="card-footer clearfix">
                 {{ $catView->links()}}
                 {{-- <ul class="pagination pagination-sm m-0 float-right">
@@ -111,7 +127,7 @@
             <input type="hidden" name="cat_id" class="cat_id">
             <input type="password" name="password" class="form-control" placeholder="Type your password for security">
 
-         
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -139,7 +155,7 @@
       toastr["success"]("{{ session('success') }}")
     $(this).attr("data-id");
     toastr.options = {
-    
+
       "positionClass": "toast-top-right",
       "showDuration": "300",
       "hideDuration": "1000",
@@ -155,7 +171,7 @@
       toastr["error"]("{{ session('fail') }}")
     $(this).attr("data-id");
     toastr.options = {
-    
+
       "positionClass": "toast-top-right",
       "showDuration": "300",
       "hideDuration": "1000",
@@ -173,7 +189,7 @@
      $('.cat_id').val(cat_id);
     });
 
-    
+
     $('.DeletePermanentWithSecurity').click(function(){
       var cat_id = $(this).attr('data-id');
       swal({

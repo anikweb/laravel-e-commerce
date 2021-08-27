@@ -34,42 +34,55 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th width="4%"></th>
+                        @can('permanent delete trash subcategory')
+                            <th width="4%"></th>
+                        @endcan
                         <th style="width: 3%">#</th>
                         <th>Subcategory Name</th>
                         <th>Slug</th>
                         <th>Created At</th>
-                        <th class="text-center">Action</th>
+                        @if (auth()->user()->can('restore trash subcategory')||auth()->user()->can('permanent delete trash subcategory'))
+                            <th class="text-center">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse ($subcatTrash as $key=> $subcatViewLoop)
-                        <tr>
-                          <td><input type="checkbox" name="delete[]" value="{{ $subcatViewLoop->id }}"></td>
-                          <td>{{ $subcatTrash->firstItem() + $key }}</td>
-                          <td>{{ $subcatViewLoop->subcategory_name }}</td>
-                          <td>{{ $subcatViewLoop->subcategory_slug }}</td>
-                          <td>{{ $subcatViewLoop->created_at->format('h:i A,  d-M-Y')}}({{ $subcatViewLoop->created_at->diffForHumans() }})</td>
-                          <td class="text-center">
-                            <a class="btn btn-success" href="{{ url('restore-subcategory').'/'.$subcatViewLoop->id }}"><i class="fas fa-undo text-white"></i> Restore</a>
-                            @if (session('pDeleteSecurity')!='true')
-                              <button type="button" class="btn btn-danger DeletePermanent" data-id='{{ $subcatViewLoop->id }}' data-toggle="modal" data-target="#ModalCenter"><i class="fas fa-trash text-white"></i> Permanent Delete</button>
-                            @else
-                              <button type="button" class="btn btn-danger DeletePermanentWithSecurity" {{-- href="{{ url('permanent-delete-category') }}/{{ $catViewLoop->id }}" --}} data-id='{{ $subcatViewLoop->id }}'>Permanent Delete</button>
-                            @endif
-                          </td>
-                        </tr>
-                      @empty
+                        @forelse ($subcatTrash as $key=> $subcatViewLoop)
+                            <tr>
+                                @can('permanent delete trash subcategory')
+                                    <td><input type="checkbox" name="delete[]" value="{{ $subcatViewLoop->id }}"></td>
+                                @endcan
+                                <td>{{ $subcatTrash->firstItem() + $key }}</td>
+                                <td>{{ $subcatViewLoop->subcategory_name }}</td>
+                                <td>{{ $subcatViewLoop->subcategory_slug }}</td>
+                                <td>{{ $subcatViewLoop->created_at->format('h:i A,  d-M-Y')}}({{ $subcatViewLoop->created_at->diffForHumans() }})</td>
+                                @if (auth()->user()->can('restore trash subcategory')||auth()->user()->can('permanent delete trash subcategory'))
+                                    <td class="text-center">
+                                    @can('restore trash subcategory')
+                                        <a class="btn btn-success" href="{{ url('restore-subcategory').'/'.$subcatViewLoop->id }}"><i class="fas fa-undo text-white"></i> Restore</a>
+                                    @endcan
+                                    @can('permanent delete trash subcategory')
+                                        @if (session('pDeleteSecurity')!='true')
+                                            <button type="button" class="btn btn-danger DeletePermanent" data-id='{{ $subcatViewLoop->id }}' data-toggle="modal" data-target="#ModalCenter"><i class="fas fa-trash text-white"></i> Permanent Delete</button>
+                                        @else
+                                            <button type="button" class="btn btn-danger DeletePermanentWithSecurity" {{-- href="{{ url('permanent-delete-category') }}/{{ $catViewLoop->id }}" --}} data-id='{{ $subcatViewLoop->id }}'>Permanent Delete</button>
+                                        @endif
+                                    @endcan
+                                    </td>
+                                @endif
+                            </tr>
+                        @empty
                         <td class="text-center text-muted" colspan="10">No data Available</td>
-                      @endforelse
+                        @endforelse
                     </tbody>
                   </table>
-                  @if ($subcatTrashCount !=0)
-                    <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
-                    <input type="checkbox"  id="checkAll"> <label for="checkAll" class="checkLbl">Check All</label>
-                    <button type="submit" class="btn deleteAll font-weight-bold "> <i class="fas fa-minus-circle text-danger  "></i> Permanent Delete</button>
-                    <button  class="btn font-weight-bold allDelete" type="button"><i class="fas fa-undo-alt text-success"></i> Restore</button>
-                  @endif
+                    @can('permanent delete trash subcategory')
+                        @if ($subcatTrashCount !=0)
+                            <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
+                            <input type="checkbox"  id="checkAll"> <label for="checkAll" class="checkLbl">Check All</label>
+                            <button type="submit" class="btn deleteAll font-weight-bold "> <i class="fas fa-minus-circle text-danger  "></i> Permanent Delete</button>
+                        @endif
+                    @endcan
                 </form>
               </div>
               <!-- /.card-body -->

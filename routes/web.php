@@ -81,6 +81,8 @@ Route::get('coupon/trash',[CouponController::class , 'trash'])->middleware(['aut
 Route::get('coupon/trash/{id}/restore',[CouponController::class , 'restore'])->middleware(['auth'])->name('coupon.restore');
 Route::get('coupon/trash/{id}/details',[CouponController::class , 'trashDetails'])->middleware(['auth'])->name('coupon.trash.details');
 Route::resource('coupon', CouponController::class);
+Route::get('dashboard/role/assign/user',[RoleController::class , 'assignUser'])->middleware(['auth'])->name('assign.user');
+Route::post('dashboard/role/assign/user/post',[RoleController::class , 'assignUserStore'])->middleware(['auth'])->name('assign.user.store');
 Route::resource('role', RoleController::class);
 // Role
 

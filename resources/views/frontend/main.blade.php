@@ -270,7 +270,7 @@
             </div>
             <ul class="row">
                 @foreach ($products as $product)
-                <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
+                <li class="col-xl-3 col-lg-4 col-sm-4 col-6">
                     <div class="product-wrap">
                         <div class="product-img">
                             <span>Sale</span>

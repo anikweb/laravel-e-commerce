@@ -12,17 +12,24 @@ class SubcategoryController extends Controller
 
 {
     function viewSubcategories(){
-        return view('backend.subcategory.subcategories-view',[
-            'subCatView'=> Subcategory::with('category')->latest()->paginate(10),
-        ],[
-            'subCatCount'=>Subcategory::all()->count(),
-        ]);
+        if(auth()->user()->can('view subcategory')){
+            return view('backend.subcategory.subcategories-view',[
+                'subCatView'=> Subcategory::with('category')->latest()->paginate(10),
+                'subCatCount'=>Subcategory::all()->count(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     function addSubcategory(){
-        return view('backend.subcategory.subcategory-form',[
-            "catView" => Category::orderBy('category_name','asc')->get(),
-        ]);
+        if(auth()->user()->can('add subcategory')){
+            return view('backend.subcategory.subcategory-form',[
+                "catView" => Category::orderBy('category_name','asc')->get(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     function postSubcategory(Request $request){
@@ -40,9 +47,13 @@ class SubcategoryController extends Controller
     }
 
     function editSubcategory($data){
-        return view('backend.subcategory.subcategory-edit-form',[
-            'subcatView'=> Subcategory::findOrFail($data),
-        ]);
+        if(auth()->user()->can('edit subcategory')){
+            return view('backend.subcategory.subcategory-edit-form',[
+                'subcatView'=> Subcategory::findOrFail($data),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     function updateSubcategory(Request $request){
@@ -58,61 +69,87 @@ class SubcategoryController extends Controller
     }
     function deleteSubcategory($data){
         // return $data;
-        $scat = Subcategory::findOrFail($data);
-
-        if($scat->product->count() <1 ){
-            Subcategory::findOrFail($data)->delete();
-            return back()->with('success','Subcategory Deleted');
+        if(auth()->user()->can('delete subcategory')){
+            $scat = Subcategory::findOrFail($data);
+            if($scat->product->count() <1 ){
+                Subcategory::findOrFail($data)->delete();
+                return back()->with('success','Subcategory Deleted');
+            }else{
+                return back()->with('fail','failed. delete product which is created by this subcategory before delete this subcategory');
+            }
         }else{
-            return back()->with('fail','failed. delete product which is created by this subcategory before delete this subcategory');
+            return abort('404');
         }
 
     }
     function trashedSubcategory(){
-
-        return view('backend.subcategory.subcategories-trashed',[
-            'subcatTrash'=> Subcategory::onlyTrashed()->latest()->paginate(10),
-            'subcatTrashCount' =>Subcategory::onlyTrashed()->count(),
-        ]);
+        if(auth()->user()->can('view trash subcategory')){
+            return view('backend.subcategory.subcategories-trashed',[
+                'subcatTrash'=> Subcategory::onlyTrashed()->latest()->paginate(10),
+                'subcatTrashCount' =>Subcategory::onlyTrashed()->count(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
     function restoreSubcategory($data){
-        Subcategory::onlyTrashed()->findOrFail($data)->restore();
-        return back()->with('success','Your Subcategory Restored');
+        if(auth()->user()->can('restore trash subcategory')){
+            Subcategory::onlyTrashed()->findOrFail($data)->restore();
+            return back()->with('success','Your Subcategory Restored');
+        }else{
+            return abort('404');
+        }
     }
     function permanentDeleteSubcategory(Request $request){
-        if(Auth::check()){
-            if(Hash::check($request->password,Auth::user()->password)){
-                Subcategory::onlyTrashed()->findOrFail($request->subcat_id)->forceDelete();
-                session()->put('pDeleteSecurity','true');
-                return back()->with('success','Trash Permanently Deleted');
-            }else{
-                return back()->with('fail','Password Do not match');
+        if(auth()->user()->can('permanent delete trash subcategory')){
+            if(Auth::check()){
+                if(Hash::check($request->password,Auth::user()->password)){
+                    Subcategory::onlyTrashed()->findOrFail($request->subcat_id)->forceDelete();
+                    session()->put('pDeleteSecurity','true');
+                    return back()->with('success','Trash Permanently Deleted');
+                }else{
+                    return back()->with('fail','Password Do not match');
+                }
             }
+        }else{
+            return abort('404');
         }
     }
     function pdeleteSubcatWithoutSecu($data){
-        Subcategory::onlyTrashed()->findOrFail($data)->forceDelete();
-        return back()->with('success','Your Subcategory Permanently Deleted');
+        if(auth()->user()->can('permanent delete trash subcategory')){
+            Subcategory::onlyTrashed()->findOrFail($data)->forceDelete();
+            return back()->with('success','Your Subcategory Permanently Deleted');
+        }else{
+            return abort('404');
+        }
     }
     function deleteAllSubcategories(Request $request){
-        if(isset($request->delete)){
-            foreach ($request->delete as $delete) {
-                Subcategory::findOrFail($delete)->delete();
+        if(auth()->user()->can('delete subcategory')){
+            if(isset($request->delete)){
+                foreach ($request->delete as $delete) {
+                    Subcategory::findOrFail($delete)->delete();
+                }
+                return back()->with('success','Subcategory Deleted');
+            }else{
+                return back()->with('fail','Please select at least 1 Subcategory to delete.');
             }
-            return back()->with('success','Subcategory Deleted');
         }else{
-            return back()->with('fail','Please select at least 1 Subcategory to delete.');
+            return abort('404');
         }
 
     }
     function deleteAllTrashSubcategories(Request $request){
-        if(isset($request->delete)){
-            foreach ($request->delete as $delete) {
-                Subcategory::onlyTrashed()->findOrFail($delete)->forceDelete();
+        if(auth()->user()->can('permanent delete trash subcategory')){
+            if(isset($request->delete)){
+                foreach ($request->delete as $delete) {
+                    Subcategory::onlyTrashed()->findOrFail($delete)->forceDelete();
+                }
+                return back()->with('success','Subcategory Trash Permanently Deleted');
+            }else{
+                return back()->with('fail','Please select at least 1 Subcategory to delete trash permanently.');
             }
-            return back()->with('success','Subcategory Trash Permanently Deleted');
         }else{
-            return back()->with('fail','Please select at least 1 Subcategory to delete trash permanently.');
+            return abort('404');
         }
 
     }
