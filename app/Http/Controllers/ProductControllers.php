@@ -19,19 +19,27 @@ class ProductControllers extends Controller
 {
     // Product view code start
     function viewProducts(){
-        return view('backend.product.products-view',[
-            'prodView'=>Product::with('subcategory')->latest()->paginate(),
-            'catViewCount'=>Product::count(),
-        ]);
+        if(auth()->user()->can('view product')){
+            return view('backend.product.products-view',[
+                'prodView'=>Product::with('subcategory')->latest()->paginate(),
+                'catViewCount'=>Product::count(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
     // Product view code end
     // add product code start
     function addProducts(){
-        return view('backend.product.product-form',[
-            'catView' => Category::all(),
-            'colrView' => ProductColor::orderBy('color_name','asc')->get(),
-            'sizeView' => ProductSize::all(),
-        ]);
+        if(auth()->user()->can('add product')){
+            return view('backend.product.product-form',[
+                'catView' => Category::all(),
+                'colrView' => ProductColor::orderBy('color_name','asc')->get(),
+                'sizeView' => ProductSize::all(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
     // add product code end
     // insert new product post code start
@@ -120,14 +128,18 @@ class ProductControllers extends Controller
     // get subcategory by ajax code end
     // edit product form view code start
     function editProduct($slug){
-        $product =  Product::where('slug',$slug)->first();
-        return view('backend.product.product-edit',[
-            'catView'=>Category::all(),
-            'productView'=>$product,
-            'colrView' => ProductColor::orderBy('color_name','asc')->get(),
-            'sizeView' => ProductSize::all(),
-            'scatView'=>Subcategory::where('foreign_key',$product->Category_id)->get(),
-        ]);
+        if(auth()->user()->can('edit product')){
+            $product =  Product::where('slug',$slug)->first();
+            return view('backend.product.product-edit',[
+                'catView'=>Category::all(),
+                'productView'=>$product,
+                'colrView' => ProductColor::orderBy('color_name','asc')->get(),
+                'sizeView' => ProductSize::all(),
+                'scatView'=>Subcategory::where('foreign_key',$product->Category_id)->get(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
     // edit product form view code end
     // edit product post code start

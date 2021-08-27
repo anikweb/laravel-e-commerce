@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Role</h1>
+            <h1>Edit Role</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add Role</li>
+              <li class="breadcrumb-item active">Edit Role</li>
             </ol>
           </div>
         </div>
@@ -27,7 +27,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title ">Add Role</h3>
+                <h3 class="card-title ">Edit Role</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->

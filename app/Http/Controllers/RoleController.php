@@ -16,9 +16,14 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('backend.role.index',[
-            'roles'=>Role::all(),
-        ]);
+        // if(auth()->user()->can(''))
+        if(auth()->user()->can('role management')){
+            return view('backend.role.index',[
+                'roles'=>Role::all(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -28,13 +33,16 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // $permission = Permission::create(['name'=>'view trash subcategory']);
-        // $permission = Permission::create(['name'=>'restore trash subcategory']);
-        // $permission = Permission::create(['name'=>'permanent delete trash subcategory']);
+
+        // $permission = Permission::create(['name'=>'role management']);
         // return 'added';
-       return view('backend.role.create',[
-           'permissions'=> Permission::orderBy('name','asc')->get(),
-       ]);
+        if(auth()->user()->can('role management')){
+            return view('backend.role.create',[
+                'permissions'=> Permission::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -70,10 +78,14 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('backend.role.edit',[
-            'roles' => Role::findOrFail($id),
-            'permissions' => Permission::orderBy('name','asc')->get(),
-        ]);
+        if(auth()->user()->can('role management')){
+            return view('backend.role.edit',[
+                'roles' => Role::findOrFail($id),
+                'permissions' => Permission::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -101,10 +113,14 @@ class RoleController extends Controller
         //
     }
     public function assignUser(){
-       return view('backend.role.assign_user',[
-           'users' =>User::orderBy('name','asc')->get(),
-           'roles' =>Role::orderBy('name','asc')->get(),
-       ]);
+        if(auth()->user()->can('role management')){
+            return view('backend.role.assign_user',[
+                'users' =>User::orderBy('name','asc')->get(),
+                'roles' =>Role::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
     public function assignUserStore(Request $request){
         // return $request;

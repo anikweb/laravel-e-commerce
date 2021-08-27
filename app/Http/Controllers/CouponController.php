@@ -31,8 +31,11 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('backend.coupon.create');
-        // return view('backend.coupon.create');
+        if(auth()->user()->can('add coupon')){
+            return view('backend.coupon.create');
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -71,9 +74,13 @@ class CouponController extends Controller
      */
     public function show(Coupon $coupon)
     {
-        return view('backend.coupon.show',[
-            'coupon' =>$coupon,
-        ]);
+        if(auth()->user()->can('view coupon')){
+            return view('backend.coupon.show',[
+                'coupon' =>$coupon,
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 
     /**
@@ -84,9 +91,13 @@ class CouponController extends Controller
      */
     public function edit(Coupon $coupon)
     {
-        return view('backend.coupon.edit',[
-            'coupon'=>$coupon,
-        ]);
+        if(auth()->user()->can('edit coupon')){
+            return view('backend.coupon.edit',[
+                'coupon'=>$coupon,
+            ]);
+        }else{
+            return abort('404');
+        }
     }
     /**
      * Update the specified resource in storage.
@@ -125,9 +136,12 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
-        // return $coupon;
-        $coupon->delete();
-        return back()->with('success','Coupon deleted.');
+        if(auth()->user()->can('delete coupon')){
+            $coupon->delete();
+            return back()->with('success','Coupon deleted.');
+        }else{
+            return abort('404');
+        }
     }
     /**
      * Display the Trash
@@ -137,9 +151,14 @@ class CouponController extends Controller
      */
     public function trash()
     {
-        return view('backend.coupon.trash',[
-            'trash' => Coupon::onlyTrashed()->latest()->paginate(10),
-        ]);
+        if(auth()->user()->can('view trash coupon')){
+            return view('backend.coupon.trash',[
+                'trash' => Coupon::onlyTrashed()->latest()->paginate(10),
+            ]);
+        }else{
+            return abort('404');
+        }
+
     }
 
     /**
@@ -151,15 +170,23 @@ class CouponController extends Controller
 
     public function restore($id)
     {
-       $trash = Coupon::onlyTrashed()->findOrFail($id);
-       $trash->restore();
-       return back()->with('success',$trash->coupon_name.' Restore');
+        if(auth()->user()->can('restore trash coupon')){
+            $trash = Coupon::onlyTrashed()->findOrFail($id);
+            $trash->restore();
+            return back()->with('success',$trash->coupon_name.' Restore');
+        }else{
+            return abort('404');
+        }
     }
 
     public function trashDetails($id)
     {
-        return view('backend.coupon.trash-show',[
-            'coupon' =>Coupon::onlyTrashed()->findOrFail($id),
-        ]);
+        if(auth()->user()->can('view trash coupon')){
+            return view('backend.coupon.trash-show',[
+                'coupon' =>Coupon::onlyTrashed()->findOrFail($id),
+            ]);
+        }else{
+            return abort('404');
+        }
     }
 }

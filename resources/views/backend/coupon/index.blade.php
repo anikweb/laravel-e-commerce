@@ -22,7 +22,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">All Coupon </h3>
                 </div>
@@ -33,7 +33,9 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th width="4%"></th>
+                                    @can('delete coupon')
+                                        <th width="4%"></th>
+                                    @endcan
                                     <th style="width: 3%">#</th>
                                     <th>Coupon Name</th>
                                     <th>Last Update</th>
@@ -43,21 +45,28 @@
                             <tbody>
                                 @forelse ($coupons as  $couponItem)
                                     <tr>
-                                        <td><input type="checkbox" name="delete[]" value="{{ $couponItem->id }}"></td>
+                                        @can('delete coupon')
+                                            <td><input type="checkbox" name="delete[]" value="{{ $couponItem->id }}"></td>
+                                        @endcan
                                         <td>{{ $coupons->firstItem() + $loop->index }}</td>
                                         <td>{{ $couponItem->coupon_name }}</td>
                                         <td>{{ $couponItem->updated_at->diffForHumans() }}</td>
                                         <td class="text-center">
+
                                             <a class="btn btn-success" href="{{ route('coupon.show',$couponItem->id) }}"> <i class="fas fa-eye text-white"></i> Details</a>
-                                            <a class="btn btn-info" href="{{ route('coupon.edit',$couponItem->id) }}"> <i class="fas fa-edit text-white"></i> Edit</a>
-                                            <form action="{{ route('coupon.destroy',$couponItem) }}" method="POST" style="display: inline-block">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fas fa-trash text-white "></i>
-                                                    <span> Delete</span>
-                                                </button>
-                                            </form>
+                                            @can('edit coupon')
+                                                <a class="btn btn-info" href="{{ route('coupon.edit',$couponItem->id) }}"> <i class="fas fa-edit text-white"></i> Edit</a>
+                                            @endcan
+                                            @can('delete coupon')
+                                                <form action="{{ route('coupon.destroy',$couponItem) }}" method="POST" style="display: inline-block">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fas fa-trash text-white "></i>
+                                                        <span> Delete</span>
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty
@@ -65,11 +74,13 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @if ($coupons->count() >0)
-                            <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="arrow_ltr.png">
-                            <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl" style="cursor: pointer;">Check All</label>
-                            <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
-                        @endif
+                        @can('delete coupon')
+                            @if ($coupons->count() >0)
+                                <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="arrow_ltr.png">
+                                <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl" style="cursor: pointer;">Check All</label>
+                                <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
+                            @endif
+                        @endcan
                     {{-- </form> --}}
                 </div>
                 <!-- /.card-body -->

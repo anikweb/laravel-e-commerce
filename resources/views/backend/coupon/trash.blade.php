@@ -33,7 +33,6 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th width="4%"></th>
                                     <th style="width: 3%">#</th>
                                     <th>Coupon Name</th>
                                     <th>Last Update</th>
@@ -43,13 +42,14 @@
                             <tbody>
                                 @forelse ($trash as $couponItem)
                                     <tr>
-                                        <td><input type="checkbox" name="delete[]" value="{{ $couponItem->id }}"></td>
                                         <td>{{ $trash->firstItem() + $loop->index }}</td>
                                         <td>{{ $couponItem->coupon_name }}</td>
                                         <td>{{ $couponItem->updated_at->diffForHumans() }}</td>
                                         <td class="text-center">
                                             <a class="btn btn-info" href="{{ route('coupon.trash.details',$couponItem->id) }}"> <i class="fas fa-eye text-white"></i> Details</a>
-                                            <a class="btn btn-success" href="{{ route('coupon.restore',$couponItem->id) }}"> <i class="fas fa-undo text-white"></i> Restore</a>
+                                            @can('restore trash coupon')
+                                                <a class="btn btn-success" href="{{ route('coupon.restore',$couponItem->id) }}"> <i class="fas fa-undo text-white"></i> Restore</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty
@@ -57,11 +57,6 @@
                                 @endforelse
                             </tbody>
                         </table>
-                    @if ($trash->count() >0)
-                        <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="arrow_ltr.png">
-                        <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl" style="cursor: pointer;">Check All</label>
-                        <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Delete</button>
-                    @endif
                      </form>
                 </div>
                 <!-- /.card-body -->

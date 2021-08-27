@@ -302,107 +302,114 @@
             </li>
             @endif
             {{-- Products  --}}
-            <li class="nav-item @yield('productOpened')">
-                <a href="#" class="nav-link @yield('productActive')">
+            @if (auth()->user()->can('add product')||auth()->user()->can('view product')||auth()->user()->can('stock out product'))
+                <li class="nav-item @yield('productOpened')">
+                    <a href="#" class="nav-link @yield('productActive')">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                        Products
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="@yield('productDBlock') background-color:#343A2C ">
+                        @can('add product')
+                            <li class="nav-item">
+                                <a href="{{ url('add-product') }}" class="nav-link @yield('addProductActive')">
+                                    <i class="fas fa-plus nav-icon"></i>
+                                    <p>Add Product</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view product')
+                            <li class="nav-item">
+                                <a href="{{ url('products-list') }}" class="nav-link @yield('viewProductActive')">
+                                    <i class="fas fa-eye nav-icon"></i>
+                                    <p>View Products</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('stock out product')
+                            <li class="nav-item">
+                                <a href="{{ url('subcategory-trashed') }}" class="nav-link @yield('trashProductActive')">
+                                    <img width="25" src="{{ asset('assets/dist/img/stock-out.png') }}" alt="stock out">
+                                    <p>Stock Out Products</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+          {{--  Coupon  --}}
+            @if (auth()->user()->can('add coupon')||auth()->user()->can('view coupon')||auth()->user()->can('view trash coupon'))
+                <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit') || Route::is('coupon.trash')||Route::is('coupon.trash.details')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit')|| Route::is('coupon.trash')||Route::is('coupon.trash.details')) active @endif">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                        Coupon
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="background-color:#343A2C">
+                        @can('add coupon')
+                            <li class="nav-item">
+                                <a href="{{ route('coupon.create') }}" class="nav-link @if(Route::is('coupon.create')) active @endif">
+                                    <i class="fas fa-plus nav-icon"></i>
+                                    <p>Add Coupon</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view coupon')
+                            <li class="nav-item">
+                                <a href="{{ route('coupon.index') }}" class="nav-link  @if(Route::is('coupon.index')||Route::is('coupon.index')||Route::is('coupon.show')||Route::is('coupon.edit')) active @endif">
+                                    <i class="fas fa-eye nav-icon"></i>
+                                    <p>View Coupon</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view trash coupon')
+                            <li class="nav-item ">
+                                <a href="{{ route('coupon.trash') }}" class="nav-link @if(Route::is('coupon.trash')||Route::is('coupon.trash.details')) active @endif">
+                                    <i class="fas fa-trash nav-icon"></i>
+                                    <p>Trash</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
+           {{--  User Role Management  --}}
+           @can('role management')
+            <li class="nav-item">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-copy"></i>
                     <p>
-                    Products
-                    <i class="fas fa-angle-left right"></i>
+                        Role Managemanet
+                        <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="@yield('productDBlock') background-color:#343A2C ">
+                <ul class="nav nav-treeview" style="background-color:#343A2C">
                     <li class="nav-item">
-                    <a href="{{ url('add-product') }}" class="nav-link @yield('addProductActive')">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Add Product</p>
-                    </a>
+                        <a href="{{ route('role.create') }}" class="nav-link">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Add Role</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                    <a href="{{ url('products-list') }}" class="nav-link @yield('viewProductActive')">
-                        <i class="fas fa-eye nav-icon"></i>
-                        <p>View Products</p>
-                    </a>
+                        <a href="{{ route('role.index') }}" class="nav-link">
+                            <i class="fas fa-eye nav-icon"></i>
+                            <p>View Roles</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                    <a href="{{ url('subcategory-trashed') }}" class="nav-link @yield('trashProductActive')">
-                        <img width="25" src="{{ asset('assets/dist/img/stock-out.png') }}" alt="stock out">
-                        <p>Stock Out Products</p>
-                    </a>
+                        <a href="{{ route('assign.user') }}" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Assign User</p>
+                        </a>
                     </li>
                 </ul>
             </li>
-          {{--  Coupon  --}}
-          <li class="nav-item @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit') || Route::is('coupon.trash')||Route::is('coupon.trash.details')) menu-is-opening menu-open @endif">
-            <a href="#" class="nav-link @if(Route::is('coupon.index')|| Route::is('coupon.create') || Route::is('coupon.show') || Route::is('coupon.edit')|| Route::is('coupon.trash')||Route::is('coupon.trash.details')) active @endif">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Coupon
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="background-color:#343A2C">
-              <li class="nav-item">
-                <a href="{{ route('coupon.create') }}" class="nav-link @if(Route::is('coupon.create')) active @endif">
-                  <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Coupon</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('coupon.index') }}" class="nav-link  @if(Route::is('coupon.index')||Route::is('coupon.index')||Route::is('coupon.show')||Route::is('coupon.edit')) active @endif">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View Coupon</p>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a href="{{ route('coupon.trash') }}" class="nav-link @if(Route::is('coupon.trash')||Route::is('coupon.trash.details')) active @endif">
-                  <i class="fas fa-trash nav-icon"></i>
-                  <p>Trash</p>
-                </a>
-              </li>
-              {{--  <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fa fa-trash"></i>
-                    <p></p>
-                </a>
-              </li>  --}}
-            </ul>
-          </li>
-           {{--  User Role Management  --}}
-           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Role Managemanet
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="background-color:#343A2C">
-              <li class="nav-item">
-                <a href="{{ route('role.create') }}" class="nav-link">
-                  <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Role</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('role.index') }}" class="nav-link">
-                  <i class="fas fa-eye nav-icon"></i>
-                  <p>View Roles</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('assign.user') }}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>Assign User</p>
-                </a>
-              </li>
-              {{--  <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fa fa-trash"></i>
-                    <p></p>
-                </a>
-              </li>  --}}
-            </ul>
-          </li>
+           @endcan
             <li class="nav-item">
                 <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
                 <i class="nav-icon fa fa-sign-out-alt"></i>

@@ -22,7 +22,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Products</h3>
               </div>
@@ -33,7 +33,9 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th width="2%"></th>
+                        @can('stock out product')
+                            <th width="2%"></th>
+                        @endcan
                         <th style="width: 3%">#</th>
                         <th>Title</th>
                         <th>Category</th>
@@ -43,48 +45,60 @@
                         <th>Description</th>
                         <th>Thumbnail</th>
                         <th>Created At</th>
-                        <th width="15%" class="text-center">Action</th>
+                        @if (auth()->user()->can('edit product')||auth()->user()->can('stock out product'))
+                            <th width="15%" class="text-center">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse ($prodView as $key=> $prodViewLoop)
-                        <tr>
-                          <td><input type="checkbox" name="delete[]" value="{{ $prodViewLoop->id }}"></td>
-                          <td>{{ $prodView->firstItem() + $key }}</td>
-                          <td>{{ $prodViewLoop->title }}</td>
-                          <td>{{ $prodViewLoop->category->category_name }}</td>
-                          <td>{{ $prodViewLoop->subcategory->subcategory_name }}</td>
-                          <td>{{ $prodViewLoop->summary }}</td>
-                          <td>
-                              <ul class="p-1 pl-3">
-                                  @php
-                                    $data = $prodViewLoop->attribute->unique('color_id');
-                                  @endphp
-                                    @foreach ($data as $attribute)
-                                        <li>{{ $attribute->color->color_name }}</li>
-                                    @endforeach
-                              </ul>
-                          </td>
-                          <td>{{ $prodViewLoop->description }}</td>
-                          <td>
-                            <img width="100" src="{{ asset('products/thumbnails/'.$prodViewLoop->created_at->format('Y/m/').$prodViewLoop->id.'/'.$prodViewLoop->thumbnail) }}" alt="{{ $prodViewLoop->title }}">
-                          </td>
-                          <td>{{ $prodViewLoop->created_at->diffForHumans() }}</td>
-                          <td class="text-center">
-                            <a class="btn btn-primary" href="{{ route('editProduct',$prodViewLoop->slug) }}"> <i class="fas fa-edit text-white"></i> Edit </a>
-                            <a class="btn btn-danger" href="{{ url('delete-category') }}/{{ $prodViewLoop->id }}"><img width="20" src="{{ asset('assets/dist/img/stock-out.png') }}" alt="stock out"> Stock Out</a>
-                          </td>
-                        </tr>
-                      @empty
-                        <td class="text-center text-muted" colspan="10">No data available</td>
-                      @endforelse
+                        @forelse ($prodView as $key=> $prodViewLoop)
+                            <tr>
+                            @can('stock out product')
+                                <td><input type="checkbox" name="delete[]" value="{{ $prodViewLoop->id }}"></td>
+                            @endcan
+                            <td>{{ $prodView->firstItem() + $key }}</td>
+                            <td>{{ $prodViewLoop->title }}</td>
+                            <td>{{ $prodViewLoop->category->category_name }}</td>
+                            <td>{{ $prodViewLoop->subcategory->subcategory_name }}</td>
+                            <td>{{ $prodViewLoop->summary }}</td>
+                            <td>
+                                <ul class="p-1 pl-3">
+                                    @php
+                                        $data = $prodViewLoop->attribute->unique('color_id');
+                                    @endphp
+                                        @foreach ($data as $attribute)
+                                            <li>{{ $attribute->color->color_name }}</li>
+                                        @endforeach
+                                </ul>
+                            </td>
+                            <td>{{ $prodViewLoop->description }}</td>
+                            <td>
+                                <img width="100" src="{{ asset('products/thumbnails/'.$prodViewLoop->created_at->format('Y/m/').$prodViewLoop->id.'/'.$prodViewLoop->thumbnail) }}" alt="{{ $prodViewLoop->title }}">
+                            </td>
+                            <td>{{ $prodViewLoop->created_at->diffForHumans() }}</td>
+                            @if (auth()->user()->can('edit product')||auth()->user()->can('stock out product'))
+                                <td class="text-center">
+                                    @can('edit product')
+                                        <a class="btn btn-primary" href="{{ route('editProduct',$prodViewLoop->slug) }}"> <i class="fas fa-edit text-white"></i> Edit </a>
+                                    @endcan
+                                    @can('stock out product')
+                                        <a class="btn btn-danger" href="{{ url('delete-category') }}/{{ $prodViewLoop->id }}"><img width="20" src="{{ asset('assets/dist/img/stock-out.png') }}" alt="stock out"> Stock Out</a>
+                                    @endcan
+                                </td>
+                            @endif
+                            </tr>
+                        @empty
+                            <td class="text-center text-muted" colspan="10">No data available</td>
+                        @endforelse
                     </tbody>
                   </table>
-                   @if ($catViewCount !=0)
-                    <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
-                    <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl">Check All</label>
-                    <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Stock Out</button>
-                  @endif
+                    @can('stock out product')
+                        @if ($catViewCount !=0)
+                            <img class="ml-2" src="{{ asset('assets/dist/img/arrow_ltr.png') }}" alt="">
+                            <input type="checkbox" id="checkAll"> <label for='checkAll' class="checkLbl">Check All</label>
+                            <button button  class="btn font-weight-bold deleteAll" type="submit"><i class="fas fa-minus-circle text-danger"></i> Stock Out</button>
+                        @endif
+                    @endcan
                 </form>
               </div>
               <!-- /.card-body -->
