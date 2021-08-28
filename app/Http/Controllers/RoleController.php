@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Mail\NewAccountCreationNotification;
 
 class RoleController extends Controller
 {
@@ -34,7 +37,7 @@ class RoleController extends Controller
     public function create()
     {
 
-        // $permission = Permission::create(['name'=>'role management']);
+        // $permission = Permission::create(['name'=>'customer']);
         // return 'added';
         if(auth()->user()->can('role management')){
             return view('backend.role.create',[
@@ -128,5 +131,27 @@ class RoleController extends Controller
         // $user->assignRole($request->role);
         $user->assignRole($request->role);
         return back();
+    }
+    public function addUser(){
+        if(auth()->user()->can('role management')){
+            return view('backend.role.create_user',[
+                'roles'=>Role::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort('404');
+        }
+    }
+    public function addUserStore(Request $request){
+        // return $request;
+        $random_password = Str::random(8);
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($random_password);
+        $user->save();
+        $user->assignRole($request->role);
+        Mail::to($request->email)->send(new NewAccountCreationNotification());
+        return back();
+
     }
 }

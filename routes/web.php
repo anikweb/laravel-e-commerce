@@ -81,9 +81,11 @@ Route::get('coupon/trash',[CouponController::class , 'trash'])->middleware(['aut
 Route::get('coupon/trash/{id}/restore',[CouponController::class , 'restore'])->middleware(['auth'])->name('coupon.restore');
 Route::get('coupon/trash/{id}/details',[CouponController::class , 'trashDetails'])->middleware(['auth'])->name('coupon.trash.details');
 Route::resource('coupon', CouponController::class);
+// Role
 Route::get('dashboard/role/assign/user',[RoleController::class , 'assignUser'])->middleware(['auth'])->name('assign.user');
 Route::post('dashboard/role/assign/user/post',[RoleController::class , 'assignUserStore'])->middleware(['auth'])->name('assign.user.store');
+Route::get('dashboard/add/user',[RoleController::class , 'addUser'])->middleware(['auth'])->name('add.user');
+Route::post('dashboard/add/user/post',[RoleController::class , 'addUserStore'])->middleware(['auth'])->name('add.user.store');
 Route::resource('role', RoleController::class);
-// Role
 
 require __DIR__.'/auth.php';

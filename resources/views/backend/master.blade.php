@@ -407,6 +407,12 @@
                             <p>Assign User</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('add.user') }}" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Add User</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
            @endcan
