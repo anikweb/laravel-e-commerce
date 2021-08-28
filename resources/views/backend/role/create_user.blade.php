@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
-                              <label for="name">Name</label>
+                              <label for="name">Name <span class="text-danger">*</span></label>
                               <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter User Name" value="{{ old('name') }}">
                               @error('name')
                                 <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">Email <span class="text-danger">*</span></label>
                                 <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Enter Email" value="{{ old('email') }}">
                                 @error('email')
                                     <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
@@ -55,9 +55,9 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="role">Role</label>
+                                <label for="role">Role <span class="text-danger">*</span></label>
                                 <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                                    <option>-Select-</option>
+                                    <option value="">-Select-</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}">{{  $role->name  }}</option>
                                     @endforeach
@@ -71,7 +71,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer text-center">
-                  <button type="submit" class="btn btn-primary"><i class="fas fa-plus-square"></i> Submit</button>
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-plus-square"></i> Add User</button>
                 </div>
               </form>
             </div>

@@ -143,14 +143,25 @@ class RoleController extends Controller
     }
     public function addUserStore(Request $request){
         // return $request;
+        // Random Password Ganarate
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email|unique:users,email',
+            'role'=>'required',
+
+        ],[
+            'email.unique' =>'This email already registerd'
+        ]);
         $random_password = Str::random(8);
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($random_password);
         $user->save();
+        // User Role Assign
         $user->assignRole($request->role);
-        Mail::to($request->email)->send(new NewAccountCreationNotification());
+        // Email to new user
+        Mail::to($request->email)->send(new NewAccountCreationNotification($random_password));
         return back();
 
     }

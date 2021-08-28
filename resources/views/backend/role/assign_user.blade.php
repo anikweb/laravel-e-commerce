@@ -83,6 +83,7 @@
                             <thead>
                                 <tr>
                                     <th>User Name</th>
+                                    <th>Email</th>
                                     <th>Role</th>
                                 </tr>
                             </thead>
@@ -90,16 +91,11 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
                                         <td>
                                             @forelse ($user->roles as $role)
-                                               <h5 class="text-bold"> {{ $role->name }}</h5>
-                                                <ol>
-                                                    @foreach ($role->permissions as $permissions)
+                                               <p class="text-bold"> {{ $role->name }}</p>
 
-                                                            <li>{{ $permissions->name }}</li>
-
-                                                    @endforeach
-                                                </ol>
                                             @empty
                                                 No Role Assign Yet
                                             @endforelse

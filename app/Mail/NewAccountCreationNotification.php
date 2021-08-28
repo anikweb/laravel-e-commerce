@@ -16,9 +16,10 @@ class NewAccountCreationNotification extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $password_to_send = "";
+    public function __construct($random_password)
     {
-        //
+        $this->password_to_send = $random_password;
     }
 
     /**
@@ -28,6 +29,8 @@ class NewAccountCreationNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('backend.mail.NewAccountCreationNotification');
+        return $this->view('backend.mail.NewAccountCreationNotification',[
+            "password_to_send" => $this->password_to_send,
+        ]);
     }
 }
