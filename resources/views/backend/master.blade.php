@@ -330,7 +330,7 @@
                         @endcan
                         @can('stock out product')
                             <li class="nav-item">
-                                <a href="{{ url('subcategory-trashed') }}" class="nav-link @yield('trashProductActive')">
+                                <a href="{{ route('viewStockOutProducts') }}" class="nav-link @yield('trashProductActive')">
                                     <img width="25" src="{{ asset('assets/dist/img/stock-out.png') }}" alt="stock out">
                                     <p>Stock Out Products</p>
                                 </a>

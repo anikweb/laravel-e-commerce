@@ -10,6 +10,7 @@ use App\Models\Subcategory;
 use App\Models\ProductColor;
 use App\Models\ProductImageGallery;
 use App\Models\ProductSize;
+use Attribute;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class ProductControllers extends Controller
     function viewProducts(){
         if(auth()->user()->can('view product')){
             return view('backend.product.products-view',[
-                'prodView'=>Product::with('subcategory')->latest()->paginate(),
+                'prodView'=>Product::with(['subcategory','category','productColor','attribute','imageGallery'])->latest()->paginate(),
                 'catViewCount'=>Product::count(),
             ]);
         }else{
@@ -29,6 +30,17 @@ class ProductControllers extends Controller
         }
     }
     // Product view code end
+    // Stock Out Product View
+    public function viewStockOutProducts(){
+        if(auth()->user()->can('view product')){
+            return view('backend.product.products_stock_out',[
+                'prodView'=> Product::with('subcategory')->latest()->paginate(),
+                'catViewCount'=> Product::count(),
+            ]);
+        }else{
+            return abort('404');
+        }
+    }
     // add product code start
     function addProducts(){
         if(auth()->user()->can('add product')){
@@ -61,7 +73,9 @@ class ProductControllers extends Controller
                 ]);
 
         $product = new Product;
+
         $product->title = $request->product_title;
+
         $product->slug = Str::slug($request->product_title);
 
         $product->Category_id = $request->category_id;

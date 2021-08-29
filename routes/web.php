@@ -69,6 +69,7 @@ Route::post('delete-all-subcategories',[SubcategoryController::class, 'deleteAll
 Route::post('delete-all-subcategories-trash',[SubcategoryController::class, 'deleteAllTrashSubcategories'])->name('deleteAllTrashSubcategories');
 // Products
 Route::get('products-list',[ProductControllers::class , 'viewProducts'])->middleware(['auth'])->name('viewProducts');
+Route::get('dashboard/products/stockout',[ProductControllers::class , 'viewStockOutProducts'])->middleware(['auth'])->name('viewStockOutProducts');
 Route::get('add-product',[ProductControllers::class , 'addProducts'])->middleware(['auth'])->name('addProducts');
 Route::post('post-product',[ProductControllers::class , 'postProducts'])->middleware(['auth'])->name('postProducts');
 Route::get('product-delete/{id}',[ProductControllers::class , 'postProducts'])->middleware(['auth'])->name('postProducts');
