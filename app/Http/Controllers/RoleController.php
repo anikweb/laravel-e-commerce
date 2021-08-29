@@ -57,6 +57,12 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         // return $request;
+        $request->validate([
+            'role_name' =>'required',
+        ]);
+        if(!$request->permission){
+            return back()->with('permissionErr','Permission field is required.');
+        }
         $role=Role::create(['name'=>$request->role_name]);
         $role->givePermissionTo($request->permission);
         return redirect()->route('role.index')->with('success','New Role Created.');
@@ -127,6 +133,10 @@ class RoleController extends Controller
     }
     public function assignUserStore(Request $request){
         // return $request;
+        $request->validate([
+            'user' =>  "required",
+            'role' =>  "required",
+        ]);
         $user = User::find($request->user);
         // $user->assignRole($request->role);
         $user->assignRole($request->role);

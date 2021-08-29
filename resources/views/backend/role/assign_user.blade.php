@@ -38,8 +38,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="user">Select User</label>
-                                <select name="user" id="user" class="form-control">
-                                    <option>-Select-</option>
+                                <select name="user" id="user" class="form-control @error('user') is-invalid @enderror">
+                                    <option value="">-Select-</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                                     @endforeach
@@ -52,8 +52,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="role">Select Role</label>
-                                <select name="role" id="role" class="form-control">
-                                    <option>-Select-</option>
+                                <select name="role" id="role" class="form-control  @error('role') is-invalid @enderror">
+                                    <option value="">-Select-</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach

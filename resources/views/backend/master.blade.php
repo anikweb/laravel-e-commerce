@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @elseif(Route::is('coupon.edit')) Edit Coupon @elseif(Route::is('coupon.trash.details')) Trash Details @endif </title>
+  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @elseif(Route::is('coupon.edit')) Edit Coupon @elseif(Route::is('coupon.trash')) Coupon Trash @elseif(Route::is('coupon.trash.details')) Trash Details @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.create')) Add Role @elseif(Route::is('role.show')) Role Details @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('assign.user')) Assign User @elseif(Route::is('add.user')) Add User @endif |  Tohoney </title>
 
   <!-- Google Font: Source Sans Pro -->
   {{-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
@@ -380,8 +380,8 @@
 
            {{--  User Role Management  --}}
            @can('role management')
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item @if(Route::is('assign.user')||Route::is('add.user')||Route::is('role.index')||Route::is('role.create')||Route::is('role.show')||Route::is('role.edit')) menu-is-opening menu-open @endif">
+                <a href="#" class="nav-link @if(Route::is('assign.user')||Route::is('add.user')||Route::is('role.index')||Route::is('role.create')||Route::is('role.show')||Route::is('role.edit')) active @endif" >
                     <i class="nav-icon fas fa-copy"></i>
                     <p>
                         Role Managemanet
@@ -390,26 +390,26 @@
                 </a>
                 <ul class="nav nav-treeview" style="background-color:#343A2C">
                     <li class="nav-item">
-                        <a href="{{ route('role.create') }}" class="nav-link">
+                        <a href="{{ route('role.create') }}" class="nav-link @if(Route::is('role.create')) active @endif">
                             <i class="fas fa-plus nav-icon"></i>
                             <p>Add Role</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('role.index') }}" class="nav-link">
+                        <a href="{{ route('role.index') }}" class="nav-link @if(Route::is('role.index')||Route::is('role.edit')) active @endif">
                             <i class="fas fa-eye nav-icon"></i>
                             <p>View Roles</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('assign.user') }}" class="nav-link">
-                            <i class="fas fa-circle nav-icon"></i>
+                        <a href="{{ route('assign.user') }}" class="nav-link @if(Route::is('assign.user')) active @endif">
+                            <i class="fas fa-plus-circle nav-icon"></i>
                             <p>Assign User</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('add.user') }}" class="nav-link">
-                            <i class="fas fa-circle nav-icon"></i>
+                        <a href="{{ route('add.user') }}" class="nav-link @if(Route::is('add.user')) active @endif">
+                            <i class="fas fa-plus-circle nav-icon"></i>
                             <p>Add User</p>
                         </a>
                     </li>
