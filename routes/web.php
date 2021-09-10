@@ -4,6 +4,7 @@ use App\Http\Controllers\BackendControllers;
 use App\Http\Controllers\CartControllers;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CategoryControllers;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductControllers;
@@ -89,4 +90,7 @@ Route::get('dashboard/add/user',[RoleController::class , 'addUser'])->middleware
 Route::post('dashboard/add/user/post',[RoleController::class , 'addUserStore'])->middleware(['auth'])->name('add.user.store');
 Route::resource('role', RoleController::class);
 
+Route::get('checkout',[CheckoutController::class , 'checkout'])->middleware(['auth'])->name('checkout');
+Route::post('get/state/list',[CheckoutController::class , 'getState'])->middleware(['auth'])->name('getState');
+Route::post('get/city/list',[CheckoutController::class , 'getCityList'])->middleware(['auth'])->name('getCityList');
 require __DIR__.'/auth.php';

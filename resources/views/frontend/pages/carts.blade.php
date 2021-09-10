@@ -117,7 +117,7 @@
                                         </div>
                                     @endif
                                     @if($coupon)
-                                        <a style="padding:10px;width: 150px;height: 45px;position: absolute;right: 0;top: 0;background: #ef4836;color: #fff;text-transform: uppercase;border: none;" type="button" id="add_coupon_btn" href="{{ url()->previous() }}"  >Remove Coupon</a>
+                                        <a style="padding:10px;width: 150px;height: 45px;position: absolute;right: 0;top: 0;background: #ef4836;color: #fff;text-transform: uppercase;border: none;" type="button" id="add_coupon_btn" href="{{ route('cartView') }}"  >Remove Coupon</a>
                                     @else
                                         <button type="button" id="add_coupon_btn">Apply Coupon</button>
                                     @endif
@@ -137,7 +137,16 @@
                                         <li><span class="pull-left">Total </span>${{ $total }}</li>
                                     @endif
                                 </ul>
-                                <a href="checkout.html">Proceed to Checkout</a>
+                                @php
+                                    session()->put('cart_subtotal_ammount',$total);
+                                    if ($coupon){
+                                        session()->put('cart_total_discount',discountCounter($total,$coupon->discount_range));
+                                    }else{
+                                        session()->forget('cart_total_discount');
+                                    }
+                                    // session()->put('cart_subtotal_ammount',$total);
+                                @endphp
+                                <a href="{{ route('checkout') }}">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>

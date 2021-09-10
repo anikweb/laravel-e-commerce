@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\country;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use Illuminate\Support\Facades\Cookie;
+
 
 class CartControllers extends Controller
 {
     function cartView($coupon =''){
 
         if($coupon !=''){
+
             if(!Coupon::where('coupon_name',$coupon)->exists()){
                 return redirect('carts/#coupon_section')->with('coupon_fail','Coupon does not exists!');
             }
@@ -22,11 +26,12 @@ class CartControllers extends Controller
             $crrntTime = date('H:i:s');
             if($crrntDate > $coupon->expiry_date){
                 return redirect('carts/#coupon_section')->with('coupon_expired',$coupon->coupon_name.' has expired.');
-            }elseif($coupon->expiry_time != ''){
-                if($crrntTime > $coupon->expiry_time){
-                    return redirect('carts/#coupon_section')->with('coupon_expired',$coupon->coupon_name.' has expired.');
-                }
             }
+            // elseif($coupon->expiry_time != ''){
+            //     if($crrntTime > $coupon->expiry_time){
+            //         return redirect('carts/#coupon_section')->with('coupon_expired',$coupon->coupon_name.' has expired.');
+            //     }
+            // }
             elseif($coupon->limit ==0){
                 return redirect('carts/#coupon_section')->with('coupon_limit_Err',$coupon->coupon_name.' has no limit.');
             }

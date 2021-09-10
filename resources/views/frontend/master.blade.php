@@ -6,6 +6,8 @@
     <title>Tohoney - Home Page</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="shortcut icon" type="image/png" href="{{ asset('front/assets/images/favicon.png') }}">
     <!-- Place favicon.ico in the root directory -->
     <!-- all css here -->
@@ -28,6 +30,9 @@
     <!-- responsive css -->
     <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css')}} ">
+    {{-- select css --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <!-- modernizr css -->
     <script src="{{ asset('front/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 </head>
@@ -67,24 +72,21 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <ul class="d-flex account_login-area">
-                            <li>
-                                <a href="javascript:void(0);"><i class="fa fa-user"></i> My Account <i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown_style">
-                                    @auth
-                                    <li><a href="#" >Profile</a></li>
-                                    @else
-                                    <li><a href="{{ route('login') }}" target="_blank">Login</a></li>
-                                    <li><a href="{{ route('register') }}">Register</a></li>
-                                    @endauth
-                                    <li><a href="cart.html">Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">wishlist</a></li>
-                                </ul>
-                            </li>
                             @auth
-                            <li><a target="_blank" href="{{ route('dashboard') }}"> Dashboard </a></li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="fa fa-user"></i> {{ Auth::user()->name }} <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown_style">
+
+                                        <li><a href="#" >Profile</a></li>
+                                        <li><a target="_blank" href="{{ route('dashboard') }}"> Dashboard </a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="wishlist.html">wishlist</a></li>
+                                    </ul>
+                                </li>
                             @else
-                            <li><a target="_blank" href="{{ route('login') }}"> Login </a></li>
+                                <li><a href="{{ route('register') }}"> Register </a></li>
+                                <li><a href="{{ route('login') }}"> Login </a></li>
                             @endauth
 
                         </ul>
@@ -196,7 +198,7 @@
 
                                     <li>Subtotol: <span class="pull-right">{{ '$'.$cartTotalAmount }}</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <a class="btn btn-danger" href="{{ route('cartView') }}" >Check Out</a>
                                     </li>
                                 </ul>
                             </li>
@@ -372,6 +374,8 @@
     <script src="{{ asset('front/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/dist/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+    {{-- select js --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @yield('footer_js')
 </body>
