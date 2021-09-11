@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css')}} ">
     {{-- select css --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
+    @yield('internal_style')
     <!-- modernizr css -->
     <script src="{{ asset('front/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 </head>

@@ -141,8 +141,10 @@
                                     session()->put('cart_subtotal_ammount',$total);
                                     if ($coupon){
                                         session()->put('cart_total_discount',discountCounter($total,$coupon->discount_range));
+                                        session()->put('cart_coupon_name',$coupon->coupon_name);
                                     }else{
                                         session()->forget('cart_total_discount');
+                                        session()->forget('cart_coupon_name');
                                     }
                                     // session()->put('cart_subtotal_ammount',$total);
                                 @endphp

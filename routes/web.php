@@ -91,6 +91,8 @@ Route::post('dashboard/add/user/post',[RoleController::class , 'addUserStore'])-
 Route::resource('role', RoleController::class);
 
 Route::get('checkout',[CheckoutController::class , 'checkout'])->middleware(['auth'])->name('checkout');
+Route::post('checkoutStore',[CheckoutController::class , 'checkoutStore'])->middleware(['auth'])->name('checkout.store');
 Route::post('get/state/list',[CheckoutController::class , 'getState'])->middleware(['auth'])->name('getState');
 Route::post('get/city/list',[CheckoutController::class , 'getCityList'])->middleware(['auth'])->name('getCityList');
+
 require __DIR__.'/auth.php';
