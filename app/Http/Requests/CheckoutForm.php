@@ -25,11 +25,11 @@ class CheckoutForm extends FormRequest
     {
         return [
             'name' => 'required',
-            'email ' => 'required',
-            'phone ' => 'required',
-            'country ' => 'required',
-            'state ' => 'required',
-            'city ' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'city' => 'required',
             'address' => 'required',
             'post_office' => 'required',
             'payment_method' =>'required',

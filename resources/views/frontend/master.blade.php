@@ -82,6 +82,10 @@
                                         <li><a href="cart.html">Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                         <li><a href="wishlist.html">wishlist</a></li>
+                                        <li><a href="#" onclick="event.preventDefault(); document.getElementById('frontend-logout-form').submit();">Logout</a></li>
+                                        <form id="frontend-logout-form" action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                        </form>
                                     </ul>
                                 </li>
                             @else

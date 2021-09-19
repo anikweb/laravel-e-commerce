@@ -40,7 +40,7 @@
                                         </div>
                                     @endif
                                     <div class="col-sm-12 col-12">
-                                        <p>First Name *</p>
+                                        <p> Name *</p>
                                         <input type="text" name="name" value="{{ Auth::user()->name }}" @error('name') style="border:1px solid red" @enderror  class="checkout-input @error('name') is-invalid @enderror">
                                         @error('name')
                                             <div class="text-danger">
@@ -139,10 +139,12 @@
 @section('footer_js')
     <script>
         $(document).ready(function(){
+
             $('#country_id').change(function(){
                 var country_id = $('#country_id').val();
-                // var state_id = $('#state_id').val();
-                // alert(country_id);
+                // var state_id = $('#state').val();
+                // console.log(state_id);
+                // ajax tocken
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -173,23 +175,28 @@
                 });
             });
         });
+
         $(document).ready(function(){
             $('#country_id').select2();
             $('#state').select2();
             $('#city').select2();
             $('#country_id').change(function(){
                 var country_id = $('#country_id').val();
-                if (country_id == '19'){
-                    $('.shippping-fee').html(100);
-                    $('.total-ammount').html('{{ $total+100 }}');
+                // alert(country_id);
+                if (country_id == 19){
                     @php
                         session()->put('cart_shipping_fee',100);
                     @endphp
-                }else{
-                    $('.shippping-fee').html('pending');
-                    $('.total-ammount').html('{{ $total }}');
+                    $('.shippping-fee').html(100);
+                    $('.total-ammount').html('{{ $total+100 }}');
                 }
-
+                else{
+                    @php
+                        session()->put('cart_shipping_fee',300);
+                    @endphp
+                    $('.shippping-fee').html('300');
+                    $('.total-ammount').html('{{ $total+300 }}');
+                }
             });
         });
 

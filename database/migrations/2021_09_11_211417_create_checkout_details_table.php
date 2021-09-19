@@ -26,10 +26,6 @@ class CreateCheckoutDetailsTable extends Migration
             $table->string('post_office')->nullable();
             $table->Integer('zip_code')->nullable();
             $table->text('order_note')->nullable();
-            $table->string('coupon_name')->nullable();
-            $table->string('discount')->nullable();
-            $table->string('shipping_fee')->nullable();
-            $table->string('total_price');
             $table->string('payment_method');
             $table->timestamps();
         });

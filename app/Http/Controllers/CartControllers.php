@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\country;
-
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
