@@ -184,16 +184,10 @@
                 var country_id = $('#country_id').val();
                 // alert(country_id);
                 if (country_id == 19){
-                    @php
-                        session()->put('cart_shipping_fee',100);
-                    @endphp
                     $('.shippping-fee').html(100);
                     $('.total-ammount').html('{{ $total+100 }}');
                 }
                 else{
-                    @php
-                        session()->put('cart_shipping_fee',300);
-                    @endphp
                     $('.shippping-fee').html('300');
                     $('.total-ammount').html('{{ $total+300 }}');
                 }

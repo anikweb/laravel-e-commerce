@@ -17,6 +17,7 @@ use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Order_detail;
 use App\Models\ProductAttribute;
+use App\Models\Product;
 
 class CheckoutController extends Controller
 {
@@ -62,7 +63,14 @@ class CheckoutController extends Controller
         // return ;
         // print_r(session()->get('cart_shipping_fee'));
         // return ;
-
+        // return $request->country;
+        if($request->country == 19){
+            session(['cart_shipping_fee'=>'100']);
+        }else{
+            session(['cart_shipping_fee'=>'300']);
+        }
+        
+        // return session('cart_shipping_fee');
         $country = country::find($request->country)->name;
         $city = city::find($request->city)->name;
         $state = state::find($request->state)->name;
@@ -73,8 +81,8 @@ class CheckoutController extends Controller
             'state' =>$state,
         ]);
         $orderSummaryId =  Order_summary::insertGetId([
-            "checkout_id" =>$checkout->id,
-            "coupon_name" =>session()->get('cart_coupon_name'),
+            "checkout_id" => $checkout->id,
+            "coupon_name" => session()->get('cart_coupon_name'),
             "discount" => session()->get('cart_total_discount'),
             "shipping_fee" => session()->get('cart_shipping_fee'),
             "sub_total_price" => session()->get('cart_subtotal_ammount'),
@@ -106,7 +114,7 @@ class CheckoutController extends Controller
         // SMS Nottification start
         $url = "http://66.45.237.70/api.php";
         $number= $request->phone;
-        $text="Hello ".$request->name.'. Your Order Placed Successfully. totall amount is: '.$totalPrice.' Thanks for your Order.';
+        $text= 'Hello '.$request->name.'. Your Order Placed Successfully. Total amount: $'.$totalPrice."\n \n".'Thanks for your Order.';
         $data= array(
         'username'=>"01834833973",
         'password'=>"TE47RSDM",
