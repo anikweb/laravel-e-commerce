@@ -34,6 +34,10 @@ use App\Http\Controllers\RoleController;
 Route::get('/',[FrontendController::class, 'frontend'])->name('frontend');
 Route::get('/product-details/{slug}',[FrontendController::class, 'productDetails'])->name('productDetails');
 Route::get('/get/color/size/{cid}/{pid}',[FrontendController::class, 'getColorSizeId'])->name('getColorSizeId');
+// Invoice Download
+Route::get('download/customer/invoice/{billing_id}',[BackendControllers::class,'downloadCustomerInvoice'])->middleware(['iscustomer'])->name('download.customer.invoice');
+
+
 // carts
 Route::get('/carts',[CartControllers::class, 'cartView'])->name('cartView');
 Route::get('/carts/{coupon}',[CartControllers::class, 'cartView']);

@@ -69,7 +69,7 @@ class CheckoutController extends Controller
         }else{
             session(['cart_shipping_fee'=>'300']);
         }
-        
+
         // return session('cart_shipping_fee');
         $country = country::find($request->country)->name;
         $city = city::find($request->city)->name;

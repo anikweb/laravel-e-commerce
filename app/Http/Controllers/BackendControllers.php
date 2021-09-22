@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\checkoutDetail;
 use Auth;
-
+use PDF;
 
 class BackendControllers extends Controller
 {
@@ -19,7 +19,15 @@ class BackendControllers extends Controller
             session()->put('pDeleteSecurity','false');
             return view('backend.dashboard');
         }
+    }
+    public function downloadCustomerInvoice($billing_id){
+       if(auth()->user()->roles()->first()->name === "Customer"){
 
-
+            $checkoutDetail = checkoutDetail::find($billing_id);
+            $pdf = PDF::loadView('backend.download.pdf.customer_invoice', compact('checkoutDetail'));
+            return $pdf->stream('invoice.pdf');
+       }else{
+            return abort(404);
+       }
     }
 }

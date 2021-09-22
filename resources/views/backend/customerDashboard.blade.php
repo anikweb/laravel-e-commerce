@@ -68,7 +68,7 @@
                         <td><span class="text-primary">Pending</span></td>
                         <td>
                             <a href="#" class="btn-sm btn-primary"><i class="fa fa-eye"></i> View Details</a>
-                            <a href="#" class="btn-sm btn-info"><i class="fa fa-download"></i> Download Invoice</a>
+                            <a target="_blank" href="{{ route('download.customer.invoice',$order->id) }}" class="btn-sm btn-info"><i class="fa fa-eye"></i> View Invoice</a>
                         </td>
                     </tr>
                 @endforeach
