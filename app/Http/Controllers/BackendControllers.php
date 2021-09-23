@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\checkoutDetail;
+use App\Models\User;
 use Auth;
 use PDF;
 
@@ -17,7 +18,10 @@ class BackendControllers extends Controller
             ]);
         }else{
             session()->put('pDeleteSecurity','false');
-            return view('backend.dashboard');
+            return view('backend.dashboard',[
+                'orders' => checkoutDetail::all(),
+                'users' => User::all(),
+            ]);
         }
     }
     public function downloadCustomerInvoice($billing_id){
