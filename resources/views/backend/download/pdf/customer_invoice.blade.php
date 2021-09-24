@@ -145,7 +145,7 @@
   </head>
   <body>
     <header class="clearfix">
-        <h2>TO<span style="color: rgb(54, 54, 199)">HONEY</span></h2>
+        <h2><span style="color:#ef4836">TO</span>HONEY</h2>
         <p style="padding: 0; margin:0">Address: Dhaka, Bangladesh</p>
         <p style="padding: 0; margin:0">Web: tohoney.com, E-mail: info@tohoney.com </p>
         <p style="padding: 0 0 10px 0; margin:0">Phone:  01783674575</p>
@@ -202,7 +202,7 @@
             @endforeach
           <tr>
             <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
-            <td colspan="6">DISCOUNT ( <span style="color: rgb(74, 74, 240); font-size:10px">{{ $order_summary->coupon_name }} Coupon Applied</span> ) </td>
+            <td colspan="6">DISCOUNT @if($order_summary->discount !=0) ( <span style="color: rgb(74, 74, 240); font-size:10px">{{ $order_summary->coupon_name }} Coupon Applied</span> ) @endif </td>
             <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">
                 @if ($order_summary->discount)
                     ${{ $order_summary->discount }}

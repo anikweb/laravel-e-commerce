@@ -15,9 +15,7 @@ class BackendControllers extends Controller
     function dashboard(){
         if(auth()->user()->roles()->first()->name =='Customer'){
             session()->put('pDeleteSecurity','false');
-            return view('backend.customerDashboard',[
-                'orders' => checkoutDetail::where('user_id',Auth::user()->id)->paginate(10),
-            ]);
+            return view('backend.customerDashboard');
         }else{
             session()->put('pDeleteSecurity','false');
             return view('backend.dashboard',[

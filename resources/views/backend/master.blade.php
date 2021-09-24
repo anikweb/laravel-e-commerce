@@ -223,6 +223,14 @@
                     <p> View Website </p>
                 </a>
             </li>
+            @if(auth()->user()->roles()->first()->name == "Customer")
+                <li class="nav-item">
+                    <a href="{{ route('orders.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-shopping-cart"></i>
+                        <p> My Orders </p>
+                    </a>
+                </li>
+            @endif
            {{-- Categories --}}
             @if (auth()->user()->can('add category')||auth()->user()->can('view category')||auth()->user()->can('view trash category'))
                 <li class="nav-item @yield('categoryOpen')">

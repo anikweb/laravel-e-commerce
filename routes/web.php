@@ -1,15 +1,17 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BackendControllers;
-use App\Http\Controllers\CartControllers;
-use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\CategoryControllers;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CouponController;
-use App\Http\Controllers\SubcategoryController;
-use App\Http\Controllers\ProductControllers;
-use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\{
+    BackendControllers,
+    CartControllers,
+    FrontendController,
+    CategoryControllers,
+    CheckoutController,
+    CouponController,
+    SubcategoryController,
+    ProductControllers,
+    RoleController,
+    CustomerController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,8 @@ Route::get('/product-details/{slug}',[FrontendController::class, 'productDetails
 Route::get('/get/color/size/{cid}/{pid}',[FrontendController::class, 'getColorSizeId'])->name('getColorSizeId');
 // Invoice Download
 Route::get('download/customer/invoice/{billing_id}',[BackendControllers::class,'downloadCustomerInvoice'])->middleware(['iscustomer'])->name('download.customer.invoice');
+Route::get('dashboard/orders',[CustomerController::class,'orders'])->middleware(['iscustomer'])->name('orders.index');
+
 
 
 // carts
