@@ -1,14 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 2</title>
+    <title>Invoice</title>
     <style>
-        @font-face {
-        font-family: SourceSansPro;
-        src: url(SourceSansPro-Regular.ttf);
-        }
-
         .clearfix:after {
         content: "";
         display: table;
@@ -16,8 +12,8 @@
         }
 
         a {
-        color: #0087C3;
-        text-decoration: none;
+        color: #5D6975;
+        text-decoration: underline;
         }
 
         body {
@@ -25,26 +21,50 @@
         width: 18cm;
         height: 29.7cm;
         margin: 0 auto;
-        color: #555555;
+        color: #001028;
         background: #FFFFFF;
         font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-family: SourceSansPro;
+        font-size: 12px;
+        font-family: Arial;
         }
 
         header {
         padding: 10px 0;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #AAAAAA;
+        margin-bottom: 30px;
         }
 
         #logo {
-        float: left;
-        margin-top: 8px;
+        text-align: center;
+        margin-bottom: 10px;
         }
 
         #logo img {
-        height: 70px;
+        width: 90px;
+        }
+
+        h1 {
+        border-top: 1px solid  #5D6975;
+        border-bottom: 1px solid  #5D6975;
+        color: #5D6975;
+        font-size: 2.4em;
+        line-height: 1.4em;
+        font-weight: normal;
+        text-align: center;
+        margin: 0 0 20px 0;
+        background: url(dimension.png);
+        }
+
+        #project {
+        float: left;
+        }
+
+        #project span {
+        color: #5D6975;
+        text-align: right;
+        width: 52px;
+        margin-right: 10px;
+        display: inline-block;
+        font-size: 0.8em;
         }
 
         #company {
@@ -52,43 +72,9 @@
         text-align: right;
         }
 
-
-        #details {
-        margin-bottom: 50px;
-        }
-
-        #client {
-        padding-left: 6px;
-        border-left: 6px solid #0087C3;
-        float: left;
-        }
-
-        #client .to {
-        color: #777777;
-        }
-
-        h2.name {
-        font-size: 1.4em;
-        font-weight: normal;
-        margin: 0;
-        }
-
-        #invoice {
-        float: right;
-        text-align: right;
-        }
-
-        #invoice h1 {
-        color: #0087C3;
-        font-size: 2.4em;
-        line-height: 1em;
-        font-weight: normal;
-        margin: 0  0 10px 0;
-        }
-
-        #invoice .date {
-        font-size: 1.1em;
-        color: #777777;
+        #project div,
+        #company div {
+        white-space: nowrap;
         }
 
         table {
@@ -98,50 +84,36 @@
         margin-bottom: 20px;
         }
 
+        table tr:nth-child(2n-1) td {
+        background: #F5F5F5;
+        }
+
         table th,
         table td {
-        padding: 20px;
-        background: #EEEEEE;
         text-align: center;
-        border-bottom: 1px solid #FFFFFF;
         }
 
         table th {
+        padding: 5px 20px;
+        color: #5D6975;
+        border-bottom: 1px solid #C1CED9;
         white-space: nowrap;
         font-weight: normal;
         }
 
-        table td {
-        text-align: right;
-        }
-
-        table td h3{
-        color: #57B223;
-        font-size: 1.2em;
-        font-weight: normal;
-        margin: 0 0 0.2em 0;
-        }
-
-        table .no {
-        color: #FFFFFF;
-        font-size: 1.6em;
-        background: #57B223;
-        }
-
+        table .service,
         table .desc {
         text-align: left;
         }
 
-        table .unit {
-        background: #DDDDDD;
+        table td {
+        padding: 20px;
+        text-align: right;
         }
 
-        table .qty {
-        }
-
-        table .total {
-        background: #57B223;
-        color: #FFFFFF;
+        table td.service,
+        table td.desc {
+        vertical-align: top;
         }
 
         table td.unit,
@@ -150,55 +122,22 @@
         font-size: 1.2em;
         }
 
-        table tbody tr:last-child td {
-        border: none;
-        }
-
-        table tfoot td {
-        padding: 10px 20px;
-        background: #FFFFFF;
-        border-bottom: none;
-        font-size: 1.2em;
-        white-space: nowrap;
-        border-top: 1px solid #AAAAAA;
-        }
-
-        table tfoot tr:first-child td {
-        border-top: none;
-        }
-
-        table tfoot tr:last-child td {
-        color: #57B223;
-        font-size: 1.4em;
-        border-top: 1px solid #57B223;
-
-        }
-
-        table tfoot tr td:first-child {
-        border: none;
-        }
-
-        #thanks{
-        font-size: 2em;
-        margin-bottom: 50px;
-        }
-
-        #notices{
-        padding-left: 6px;
-        border-left: 6px solid #0087C3;
+        table td.grand {
+        border-top: 1px solid #5D6975;;
         }
 
         #notices .notice {
+        color: #5D6975;
         font-size: 1.2em;
         }
 
         footer {
-        color: #777777;
+        color: #5D6975;
         width: 100%;
         height: 30px;
         position: absolute;
         bottom: 0;
-        border-top: 1px solid #AAAAAA;
+        border-top: 1px solid #C1CED9;
         padding: 8px 0;
         text-align: center;
         }
@@ -206,86 +145,87 @@
   </head>
   <body>
     <header class="clearfix">
-      {{--  <div id="logo">
-        <img src="{{ asset('ba') }}">
-      </div>  --}}
-      <div id="company">
-        <h1 class="name" style="color: red">Company Name</h1>
-        <div>455 Foggy Heights, AZ 85004, US</div>
-        <div>(602) 519-0450</div>
-        <div><a href="mailto:company@example.com">company@example.com</a></div>
-      </div>
+        <h2>TO<span style="color: rgb(54, 54, 199)">HONEY</span></h2>
+        <p style="padding: 0; margin:0">Address: Dhaka, Bangladesh</p>
+        <p style="padding: 0; margin:0">Web: tohoney.com, E-mail: info@tohoney.com </p>
+        <p style="padding: 0 0 10px 0; margin:0">Phone:  01783674575</p>
+      <h1>INVOICE 3-2-1</h1>
+      <div id="project">
+        <div><span style="color: rgb(2, 144, 226); font-size:12px">Bill to</span></div>
+        <div><span>CLIENT</span> {{ $checkoutDetail->name }}</div>
+        <div><span>ADDRESS</span> {{ $checkoutDetail->address.','.$checkoutDetail->city.','.$checkoutDetail->state.','.$checkoutDetail->country }}</div>
+        <div><span>EMAIL</span> <a href="mailto:john@example.com">{{ $checkoutDetail->email }}</a></div>
+        <div><span>PHONE</span> {{ $checkoutDetail->phone }}</div>
+        <div><span>DATE</span> {{ $checkoutDetail->created_at->format('d-M-Y') }}</div>
+        <div><span>DUE DATE</span> {{ $checkoutDetail->created_at->format('d-M-Y') }}</div>
       </div>
     </header>
     <main>
-      <div id="details" class="clearfix">
-        <div id="client">
-          <div class="to">INVOICE TO:</div>
-          <h2 class="name">John Doe</h2>
-          <div class="address">796 Silver Harbour, TX 79273, US</div>
-          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
-        </div>
-        <div id="invoice">
-          <h1>INVOICE 3-2-1</h1>
-          <div class="date">Date of Invoice: 01/06/2014</div>
-          <div class="date">Due Date: 30/06/2014</div>
-        </div>
-      </div>
-      <table border="0" cellspacing="0" cellpadding="0">
+      <table>
         <thead>
           <tr>
-            <th class="no">#</th>
+            <th class="service" style="background-color: #57B223; color:#fff; font-size:15px">SL</th>
+            <th class="service">Product</th>
             <th class="desc">DESCRIPTION</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="qty">QUANTITY</th>
-            <th class="total">TOTAL</th>
+            <th class="desc">Color</th>
+            <th class="desc">Size</th>
+            <th>PRICE</th>
+            <th>QTY</th>
+            <th style="background-color: #57B223; color:#fff; font-size:15px">TOTAL</th>
           </tr>
         </thead>
+
         <tbody>
+            @foreach ($order_details as $order_details)
+                <tr>
+                    <td class="service" style="background-color: #57B223; color:#fff; font-size:15px">{{ $loop->index+1 }}</td>
+                    <td class="service">
+                        {{ App\Models\Product::find($order_details->product_id)->title }}
+                    </td>
+                    <td class="desc" style="text-align: justify">
+                        {{ Str::limit(App\Models\Product::find($order_details->product_id)->summary,50) }}
+                    </td>
+                    <td class="desc">
+                        {{ App\Models\ProductColor::find($order_details->color_id)->color_name }}
+                    </td>
+                    <td class="desc">
+                        {{ App\Models\ProductSize::find($order_details->size_id)->size_name }}
+                    </td>
+                    <td>
+                        ${{ App\Models\Product::find($order_details->product_id)->attribute->where('color_id',$order_details->color_id)->where('size_id',$order_details->size_id)->first()->offer_price }}
+                    </td>
+                    <td>{{ $order_details->quantity }}</td>
+                    <td style="background-color: #57B223; color:#fff; font-size:15px">
+                        ${{ App\Models\Product::find($order_details->product_id)->attribute->where('color_id',$order_details->color_id)->where('size_id',$order_details->size_id)->first()->offer_price *$order_details->quantity }}
+                    </td>
+                </tr>
+            @endforeach
           <tr>
-            <td class="no">01</td>
-            <td class="desc"><h3>Website Design</h3>Creating a recognizable design solution based on the company's existing visual identity</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">30</td>
-            <td class="total">$1,200.00</td>
+            <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+            <td colspan="6">DISCOUNT ( <span style="color: rgb(74, 74, 240); font-size:10px">{{ $order_summary->coupon_name }} Coupon Applied</span> ) </td>
+            <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">
+                @if ($order_summary->discount)
+                    ${{ $order_summary->discount }}
+                @else
+                    0
+                @endif
+            </td>
           </tr>
           <tr>
-            <td class="no">02</td>
-            <td class="desc"><h3>Website Development</h3>Developing a Content Management System-based Website</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">80</td>
-            <td class="total">$3,200.00</td>
+            <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+            <td colspan="6">SHIPPING FEE</td>
+            <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">${{ $order_summary->shipping_fee }}</td>
           </tr>
           <tr>
-            <td class="no">03</td>
-            <td class="desc"><h3>Search Engines Optimization</h3>Optimize the site for search engines (SEO)</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">20</td>
-            <td class="total">$800.00</td>
+            <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+            <td colspan="6" class="grand total">GRAND TOTAL</td>
+            <td class="grand total" style="background-color: #1d2817; color:#fff; font-size:15px">${{ $order_summary->total_price }}</td>
           </tr>
         </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="2">SUBTOTAL</td>
-            <td>$5,200.00</td>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="2">TAX 25%</td>
-            <td>$1,300.00</td>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="2">GRAND TOTAL</td>
-            <td>$6,500.00</td>
-          </tr>
-        </tfoot>
       </table>
-      <div id="thanks">Thank you!</div>
       <div id="notices">
         <div>NOTICE:</div>
-        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+        <div class="notice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur laborum nam laudantium explicabo ducimus possimus perferendis illo quasi repellendus iste!</div>
       </div>
     </main>
     <footer>
