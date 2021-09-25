@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @elseif(Route::is('coupon.edit')) Edit Coupon @elseif(Route::is('coupon.trash')) Coupon Trash @elseif(Route::is('coupon.trash.details')) Trash Details @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.create')) Add Role @elseif(Route::is('role.show')) Role Details @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('assign.user')) Assign User @elseif(Route::is('add.user')) Add User @endif |  Tohoney </title>
+  <title>@if(Route::is('dashboard')) Dashboard @elseif(Route::is('categories')) Categories @elseif(Route::is('AddCategory')) Add Category @elseif(Route::is('editCategory')) Edit Category @elseif(Route::is('trashedCategories')) Categories Trash @elseif(Route::is('viewSubcategories')) Subcategories @elseif(Route::is('addSubcategory')) Add Subcategory @elseif(Route::is('editSubcategory')) Edit Subcategory @elseif(Route::is('trashedSubcategory')) Subcategoryies Trash @elseif(Route::is('viewProducts')) Products @elseif(Route::is('addProducts')) Add Product @elseif(Route::is('editProduct')) Edit Product @elseif(Route::is('coupon.index')) Coupon @elseif(Route::is('coupon.create')) Add Coupon @elseif(Route::is('coupon.show')) Coupon Details @elseif(Route::is('coupon.edit')) Edit Coupon @elseif(Route::is('coupon.trash')) Coupon Trash @elseif(Route::is('coupon.trash.details')) Trash Details @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.create')) Add Role @elseif(Route::is('role.show')) Role Details @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('assign.user')) Assign User @elseif(Route::is('add.user')) Add User @elseif(Route::is('orders.index')) My Orders @endif |  Tohoney </title>
 
   <!-- Google Font: Source Sans Pro -->
   {{-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
@@ -225,9 +225,9 @@
             </li>
             @if(auth()->user()->roles()->first()->name == "Customer")
                 <li class="nav-item">
-                    <a href="{{ route('orders.index') }}" class="nav-link">
+                    <a href="{{ route('orders.index') }}" class="nav-link @if(Route::is('orders.index')) active @endif">
                         <i class="nav-icon fa fa-shopping-cart"></i>
-                        <p> My Orders </p>
+                        <p>My Orders</p>
                     </a>
                 </li>
             @endif
@@ -447,7 +447,7 @@
       @php
          $currentYear = date('Y')
       @endphp
-    <strong>Copyright &copy; {{ $currentYear.'-'.($currentYear+1) }} <span class="text-muted">All rights reserved.</span> <span>Developed by</span> <a target="_blank" title="https://anikkumarnandi.com" href="https://anikkumarnandi.com">Anik Kumar Nandi</a>.</strong>
+    <strong>Copyright &copy; {{ $currentYear.'-'.($currentYear+1) }} <span class="text-muted">All rights reserved.</span> <span>Developed by</span> <a target="_blank" title="https://anikkumarnandi.com" href="https://aniknandi.com">Anik Kumar Nandi</a>.</strong>
 
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.1.0

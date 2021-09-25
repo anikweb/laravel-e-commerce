@@ -177,6 +177,7 @@
                                     </li>
                                 </ul>
                             </li>
+
                             <li>
                                 <a href="{{ route('cartView') }}"><i class="flaticon-shop"></i> <span>{{ totalCart() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">

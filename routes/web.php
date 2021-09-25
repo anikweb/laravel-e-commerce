@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     ProductControllers,
     RoleController,
     CustomerController,
+    SslCommerzPaymentController,
 };
 
 /*
@@ -102,5 +103,19 @@ Route::get('checkout',[CheckoutController::class , 'checkout'])->middleware(['au
 Route::post('checkoutStore',[CheckoutController::class , 'checkoutStore'])->middleware(['auth'])->name('checkout.store');
 Route::post('get/state/list',[CheckoutController::class , 'getState'])->middleware(['auth'])->name('getState');
 Route::post('get/city/list',[CheckoutController::class , 'getCityList'])->middleware(['auth'])->name('getCityList');
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 require __DIR__.'/auth.php';
