@@ -22,7 +22,7 @@
         <!-- checkout-area start -->
         <div class="checkout-area ptb-100">
             <div class="container">
-                <form action="{{ route('checkout.store') }}" method="POST">
+                <form id="checkout_form" action="{{ url('/pay') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-lg-8">
@@ -114,16 +114,12 @@
 
                                 <ul class="payment-method">
                                     <li>
-                                        <input id="paypal" type="radio" value="paypal" name="payment_method">
-                                        <label for="paypal">Paypal</label>
+                                        <input id="online" type="radio" value="online" name="payment_method">
+                                        <label for="online">Online</label>
                                     </li>
                                     <li>
-                                        <input id="card" type="radio" value="credit_card" name="payment_method">
-                                        <label for="card">Credit Card</label>
-                                    </li>
-                                    <li>
-                                        <input id="delivery" type="radio" value="cod" name="payment_method">
-                                        <label for="delivery">Cash on Delivery</label>
+                                        <input id="cod" type="radio" value="cash on delivery" name="payment_method">
+                                        <label for="cod">Cash on Delivery</label>
                                     </li>
                                 </ul>
                                 <button>Place Order</button>
@@ -191,6 +187,14 @@
                     $('.shippping-fee').html('300');
                     $('.total-ammount').html('{{ $total+300 }}');
                 }
+            });
+            $('#cod').change(function(){
+                $('#checkout_form').attr('action',"{{ route('checkout.store') }}" )
+
+            });
+            $('#online').change(function(){
+                $('#checkout_form').attr('action',"{{ url('/pay') }}" )
+
             });
         });
 

@@ -64,6 +64,7 @@ class CheckoutController extends Controller
         // print_r(session()->get('cart_shipping_fee'));
         // return ;
         // return $request->country;
+
         if($request->country == 19){
             session(['cart_shipping_fee'=>'100']);
         }else{
